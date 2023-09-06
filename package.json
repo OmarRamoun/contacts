@@ -2,35 +2,124 @@
   "name": "contacts",
   "version": "0.0.1",
   "private": true,
+  "npmClient": "yarn",
+  "engines": {
+    "node": ">=18.17.1",
+    "yarn": ">=1.22.0",
+    "npm": "please-use-yarn"
+  },
   "scripts": {
+    "build": "rollup -c",
+    "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
-    "start": "react-native start",
-    "test": "jest"
+    "lint": "eslint --max-warnings=0 ./src --ext=.ts,.tsx",
+    "lint:fix": "lint --fix",
+    "type-check": "tsc -p tsconfig.json --noEmit",
+    "format": "prettier \"**/*.+(json|ts|tsx)\"",
+    "format:check": "npm run prettier -- --check",
+    "format:fix": "npm run prettier -- --write",
+    "test": "jest --silent",
+    "tsprune": "yarn ts-prune -e -i '(assets|server|public|src/index.ts|components/src/index.ts)'",
+    "tsprune:all": "yarn ts-prune -e -i",
+    "pre-commit": "lint-staged",
+    "pre-push": "git diff --quiet HEAD origin/main -- src || yarn build",
+    "prepare": "husky install"
   },
   "dependencies": {
     "react": "18.2.0",
-    "react-native": "0.72.4"
+    "react-native": "0.72.4",
+    "@reduxjs/toolkit": "^1.8.0",
+    "metro-config": "^0.79.0",
+    "react-hook-form": "^7.46.1",
+    "react-native-svg-transformer": "^1.1.0",
+    "react-redux": "^7.2.6",
+    "react-router": "^6.15.0",
+    "styled-components": "^6.0.7",
+    "styled-system": "^5.1.5",
+    "uuid": "^9.0.0",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@ramounlint/eslint-plugin": "file:eslint-plugin/lib",
+    "@commitlint/cli": "^17.2.1",
+    "@commitlint/config-conventional": "^17.2.1",
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
+    "@babel/preset-react": "7.x",
     "@babel/runtime": "^7.20.0",
+    "@babel/eslint-parser": "^7.22.11",
+    "@babel/plugin-syntax-jsx": "7.x",
     "@react-native/eslint-config": "^0.72.2",
     "@react-native/metro-config": "^0.72.11",
-    "@tsconfig/react-native": "^3.0.0",
-    "@types/react": "^18.0.24",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@rollup/plugin-image": "^3.0.2",
+    "@svgr/cli": "^8.1.0",
+    "@svgr/rollup": "^8.1.0",
+    "@svgr/webpack": "^8.1.0",
+    "@types/react": "18.2.0",
+    "@types/react-native": "^0.72.2",
+    "@types/node": "20.5.6",
     "@types/react-test-renderer": "^18.0.0",
+    "@types/styled-components": "^5.1.0",
+    "@types/styled-system": "^5.1.4",
+    "@types/uuid": "^9.0.3",
+    "@types/metro-config": "^0.76.3",
+    "@typescript-eslint/eslint-plugin": "5.6.0",
+    "@typescript-eslint/parser": "5.6.0",
+    "@typescript-eslint/utils": "^6.5.0",
+    "eslint": "^8.48.0",
+    "eslint-config-airbnb": "18.x",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-babel-module": "^5.3.2",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "7.x",
+    "eslint-plugin-react-hooks": "4.x",
+    "eslint-plugin-react-native": "^4.0.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "prettier": "^3.0.2",
     "babel-jest": "^29.2.1",
-    "eslint": "^8.19.0",
     "jest": "^29.2.1",
+    "rollup": "^3.28.1",
+    "rollup-plugin-progress": "^1.1.2",
+    "rollup-plugin-typescript2": "^0.35.0",
     "metro-react-native-babel-preset": "0.76.8",
-    "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
-    "typescript": "4.8.4"
+    "typescript": "4.8.4",
+    "husky": "^8.0.3",
+    "lint-staged": "^10.5.3",
+    "ts-prune": "^0.10.3"
   },
-  "engines": {
-    "node": ">=16"
+  "resolutions": {
+    "@types/react": "18.2.0",
+    "**/yup": "0.27.0",
+    "**/@types/yup": "0.29.8",
+    "**/eslint": "7.11.0"
+  },
+  "jest": {
+    "verbose": true,
+    "testMatch": [
+      "<rootDir>/__tests__/**/*.(spec|test).ts?(x)"
+    ],
+    "preset": "react-native-web",
+    "setupFiles": [
+      "<rootDir>/__tests__/setup.ts"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|@react-native)"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }

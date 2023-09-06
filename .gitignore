@@ -36,9 +36,11 @@ local.properties
 
 # node.js
 #
-node_modules/
-npm-debug.log
-yarn-error.log
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
 # fastlane
 #
@@ -64,3 +66,30 @@ yarn-error.log
 
 # testing
 /coverage
+
+
+# npm
+node_modules/
+# environment variables
+# local env files
+.env
+.env.*
+.env*.local
+!.env.example
+
+
+# misc
+*.pem
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+.vscode
+
+yarn.lock
+yarn-error.log
+package-lock.json
+

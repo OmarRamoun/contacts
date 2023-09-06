@@ -1,0 +1,10 @@
+{
+  "name": "@ramounlint/eslint-plugin",
+  "version": "1.0.0",
+  "description": "Custom eslint rules",
+  "author": "Omar Ramoun <contact@omarramoun.com>",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "node ./__tests__/index.test.js"
+  }
+}
