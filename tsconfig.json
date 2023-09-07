@@ -16,7 +16,7 @@
     "forceConsistentCasingInFileNames": true,
     "alwaysStrict": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "rootDir": "src",
     "baseUrl": "src/",
@@ -53,6 +53,6 @@
     "composite": true,
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/"],
+  "include": ["index.js", "src/**/*.*", "app.json"],
   "exclude": ["node_modules", "test/*", "babel.config.js", "metro.config.js"]
 }

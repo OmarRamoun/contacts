@@ -26,7 +26,6 @@
     "@ramounlint/jsx-parent-first": "error",
     "@ramounlint/line-between-statements": "error",
 
-    "no-unused-vars": [1, {"args": "after-used", "argsIgnorePattern": "^_"}],
     "import/first": "error",
     "arrow-body-style": ["error", "as-needed"],
     "camelcase": "warn",
@@ -34,7 +33,6 @@
     "react/require-default-props": "off",
     "class-methods-use-this": "off",
     "comma-dangle": "off",
-    "no-underscore-dangle": "off",
     "spaced-comment": [
       "error",
       "always",
@@ -117,21 +115,11 @@
     "@typescript-eslint/no-explicit-any": "off",
     "indent": ["error", 2],
     "no-ternary": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        "vars": "all",
-        "args": "after-used",
-        "ignoreRestSiblings": false,
-        "varsIgnorePattern": "^_",
-        "argsIgnorePattern": "^_"
-      }
-    ],
     "@typescript-eslint/no-namespace": 0,
     "import/extensions": [
       1,
       {
-        "extensions": [".jsx", ".ts", ".tsx"]
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     ],
     "import/no-extraneous-dependencies": [
@@ -189,9 +177,11 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],
-      "plugins": ["@typescript-eslint/eslint-plugin"],
-      "extends": ["airbnb-base", "eslint:recommended", "plugin:import/recommended"],
+      "plugins": ["@typescript-eslint/eslint-plugin", "react"],
+      "extends": ["airbnb-base", "eslint:recommended", "plugin:import/recommended", "plugin:react/recommended"],
       "rules": {
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
         "import/order": [
           "error",
           {
@@ -218,6 +208,7 @@
           "error",
           "ignorePackages",
           {
+            "": "never",
             "ts": "never",
             "tsx": "never",
             "json": "always"
@@ -239,6 +230,17 @@
         "implicit-arrow-linebreak": [0, "beside"],
         "@typescript-eslint/no-empty-function": "off",
         "no-multiple-empty-lines": ["error", {"max": 2, "maxEOF": 1}],
+        "no-unused-vars": "off",
+        "no-underscore-dangle": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "vars": "all",
+            "args": "after-used",
+            "ignoreRestSiblings": false,
+            "varsIgnorePattern": "^_|React"
+          }
+        ],
         "max-len": [
           "warn",
           {
@@ -251,8 +253,7 @@
       "files": ["*.js", "*.jsx"],
       "rules": {
         "import/no-extraneous-dependencies": "off",
-        "import/order": "off",
-        "no-unused-vars": "off"
+        "import/order": "off"
       }
     },
     {
@@ -280,10 +281,6 @@
         "extensions": [".js", ".ts", ".tsx"]
       }
     }
-  },
-  "globals": {
-    "React": true,
-    "JSX": true
   },
   "ignorePatterns": ["*.config.**", "build/", "test/*", "eslint-plugin/*"]
 }
