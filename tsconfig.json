@@ -53,6 +53,6 @@
     "composite": true,
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/"],
-  "exclude": ["node_modules", "test/*", "babel.config.js", "metro.config.js"]
+  "include": ["./src"],
+  "exclude": ["node_modules", "test/*", ".babelrc", "metro.config.js"]
 }

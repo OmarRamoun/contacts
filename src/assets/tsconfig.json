@@ -1,0 +1,23 @@
+{
+  "include": [".", "../types.d.ts"],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": false,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "allowJs": false,
+    "composite": true,
+    "declaration": true,
+    "jsx": "react",
+    "noEmit": false,
+    "rootDir": ".",
+    "typeRoots": ["../../@types", "../../node_modules/@types/"],
+  }
+}

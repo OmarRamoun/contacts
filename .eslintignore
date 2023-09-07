@@ -2,5 +2,5 @@ node_modules
 __generated__
 eslint-plugin/
 commitlint.config.js
-./index.js
+index.js
 
