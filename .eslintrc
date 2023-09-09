@@ -113,7 +113,6 @@
     "react/react-in-jsx-scope": "off",
     "no-duplicate-imports": "error",
     "@typescript-eslint/no-explicit-any": "off",
-    "indent": ["error", 2],
     "no-ternary": "off",
     "@typescript-eslint/no-namespace": 0,
     "import/extensions": [
@@ -180,8 +179,10 @@
       "plugins": ["@typescript-eslint/eslint-plugin", "react"],
       "extends": ["airbnb-base", "eslint:recommended", "plugin:import/recommended", "plugin:react/recommended"],
       "rules": {
+        "no-confusing-arrow": "off",
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
+        "indent": "off",
         "import/order": [
           "error",
           {

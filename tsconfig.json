@@ -2,22 +2,25 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es2015",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": true,
-    "jsx": "react-jsx",
-    "noEmit": true,
-    "isolatedModules": true,
     "strict": true,
     "moduleResolution": "node",
+    "isolatedModules": false,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "alwaysStrict": true,
+    "sourceMap": true,
     "noFallthroughCasesInSwitch": true,
+    "composite": true,
+    "jsx": "react",
+    "noEmit": false,
     "noUnusedLocals": false,
     "noUnusedParameters": true,
+    "outDir": "lib",
     "rootDir": "src",
     "baseUrl": "src/",
     "paths": {
@@ -50,9 +53,9 @@
     "incremental": true,
     "useDefineForClassFields": true,
     "noImplicitAny": true,
-    "composite": true,
-    "typeRoots": ["node_modules/@types"]
+    "tsBuildInfoFile": "lib/tsconfig.tsbuildinfo",
+    "typeRoots": ["../../@types", "node_modules/@types"]
   },
-  "include": ["index.js", "src/**/*.*", "app.json"],
+  "include": ["src/", "types.d.ts"],
   "exclude": ["node_modules", "test/*", "babel.config.js", "metro.config.js"]
 }

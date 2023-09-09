@@ -1,25 +1,3 @@
-/*
-const path = require('path');
-
-const buildEslintCommand = (filenames) =>
-  `yarn lint --fix --file ${filenames.map((f) => path.relative(process.cwd(), f)).join(' --file ')}`;
-
-const buildEslintCommand = (filenames) => {
-  return `yarn lint --fix --max-warnings=0 --file ${filenames
-    .reduce((files, file) => {
-      const pathToFile = path.relative(process.cwd(), file);
-      if (!ignorePaths.includes(pathToFile)) files.push(pathToFile);
-      return files;
-    }, [])
-    .join(' --file ')}`;
-};
-
-module.exports = {
-  '*.{ts,tsx,js,jsx}': [buildEslintCommand],
-};
-
-*/
-
 const {ESLint} = require('eslint');
 
 const removeIgnoredFiles = async (files) => {

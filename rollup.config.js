@@ -4,9 +4,9 @@ import progress from 'rollup-plugin-progress';
 import rollupTypescript from 'rollup-plugin-typescript2';
 
 module.exports = {
-  input: 'src/assets/index.ts',
+  input: './src/assets/index.ts',
   output: {
-    dir: 'src/assets/build',
+    dir: './src/assets/build',
     format: 'cjs',
   },
   plugins: [
@@ -14,7 +14,7 @@ module.exports = {
     rollupTypescript({
       objectHashIgnoreUnknownHack: true,
       check: !!process.env.CI,
-      tsconfig: 'src/assets/tsconfig.json',
+      tsconfig: './src/assets/tsconfig.json',
     }),
     image({exclude: './**/*.svg'}),
     svgr({

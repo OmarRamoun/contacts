@@ -3,4 +3,6 @@ __generated__
 eslint-plugin/
 commitlint.config.js
 ./index.js
+src/assets/build
+types.d.ts
 
