@@ -5,4 +5,5 @@ commitlint.config.js
 ./index.js
 src/assets/build
 types.d.ts
+styled-components.d.ts
 

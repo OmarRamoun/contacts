@@ -6,7 +6,7 @@
     "allowJs": true,
     "strict": true,
     "moduleResolution": "node",
-    "isolatedModules": false,
+    "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -16,7 +16,7 @@
     "sourceMap": true,
     "noFallthroughCasesInSwitch": true,
     "composite": true,
-    "jsx": "react",
+    "jsx": "react-native",
     "noEmit": false,
     "noUnusedLocals": false,
     "noUnusedParameters": true,
@@ -53,9 +53,9 @@
     "incremental": true,
     "useDefineForClassFields": true,
     "noImplicitAny": true,
-    "tsBuildInfoFile": "lib/tsconfig.tsbuildinfo",
-    "typeRoots": ["../../@types", "node_modules/@types"]
+    "typeRoots": ["../../@types", "node_modules/@types"],
+    "types": ["node", "./src/types", "./src/types/styled-components", "styled-components-react-native"]
   },
-  "include": ["src/", "types.d.ts"],
+  "include": ["src", "types.d.ts", "src/types"],
   "exclude": ["node_modules", "test/*", "babel.config.js", "metro.config.js"]
 }
