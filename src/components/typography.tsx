@@ -1,10 +1,11 @@
-import React from 'react';
 import {Text} from 'react-native';
 
 import type {DefaultTheme} from 'styled-components/native';
 import styled from 'styled-components/native';
-import type {TypographyProps, LayoutProps} from 'styled-system';
-import {typography, color, layout, textStyle} from 'styled-system';
+import type {LayoutProps, TypographyProps} from 'styled-system';
+import {color, layout, textStyle, typography} from 'styled-system';
+
+import {theme} from '@styles';
 
 export interface TypographyStyleProps {
   textStyle?: keyof DefaultTheme['textStyles'];
@@ -20,7 +21,7 @@ const Typography = styled(Text)<TypographyProps & LayoutProps & TypographyStyleP
 
 Typography.defaultProps = {
   textStyle: 'body',
-  color: 'black',
+  color: theme.primaryColor.default,
 };
 
 export {Typography};
