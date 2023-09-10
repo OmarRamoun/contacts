@@ -20,7 +20,7 @@ const ListFooterComponent = ({canPaginate, onLayout}: ListFooterComponentProps) 
 
   return (
     <Flex onLayout={onLayout} flexDirection="row" justifyContent="center" my={2}>
-      <Spinner size="md" color="blue" />
+      <Spinner size="md" />
     </Flex>
   );
 };

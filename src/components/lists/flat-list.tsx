@@ -1,11 +1,11 @@
 import React, {useRef, useCallback, useState, useEffect} from 'react';
-import type {FlatListProps, LayoutChangeEvent} from 'react-native';
+import type {FlatListProps as FLProps, LayoutChangeEvent} from 'react-native';
 import {FlatList as FL, View} from 'react-native';
 
 import type {ListProps} from './list-shared';
 import {ListFooterComponent, getContainerStyle} from './list-shared';
 
-interface ExpandFlatListProps extends Omit<FlatListProps<any>, 'contentContainerStyle' | 'onEndReached'>, ListProps {
+export interface FlatListProps extends Omit<FLProps<any>, 'contentContainerStyle' | 'onEndReached'>, ListProps {
   onEndReached?: ((info: {distanceFromEnd: number}) => void) | null;
   keyField?: string;
 }
@@ -19,7 +19,7 @@ const FlatList = ({
   onEndReached,
   keyField = 'id',
   ...props
-}: ExpandFlatListProps) => {
+}: FlatListProps) => {
   const heightOffsetTriggerChecked = useRef<boolean>(false);
   const flatList = useRef<FL<any>>(null);
   const listFooterComponent = useRef<any>(null);
