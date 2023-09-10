@@ -31,8 +31,8 @@ export const buttonHeightMap: {
 
 export const buttonTypes: {[key: string]: ButtonStyleObject} = {
   primary: {
-    alternateColor: 'blueDarkened',
-    backgroundColor: 'blue',
+    alternateColor: theme.primaryColor.alt,
+    backgroundColor: theme.primaryColor.default,
     textColor: 'white',
   },
   primaryDestructive: {
