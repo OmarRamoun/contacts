@@ -38,7 +38,10 @@ const ConfirmBox = ({onOk, onCancel, headerTitle, bodyTitle}: ConfirmBoxProps) =
       <Button depth={4} onPress={onOk}>
         Ok
       </Button>
-      <Button onPress={onCancel}>Cancel</Button>
+
+      <Button depth={4} type="primaryDestructive" onPress={onCancel}>
+        Cancel
+      </Button>
     </TableFooter>
   </>
 );
