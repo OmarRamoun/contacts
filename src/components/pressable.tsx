@@ -15,7 +15,7 @@ const Pressable = ({onPress, to, children}: PressableProps) => (
   <ButtonInteraction onPress={onPress} to={to}>
     {({mouseProps, pressed, ...interactionProps}) => (
       <Box
-        bg={pressed ? 'lightBlue1' : 'transparent'}
+        bg={pressed ? 'transBlack' : 'transparent'}
         borderRadius="md"
         justifyContent="space-between"
         p={2}
