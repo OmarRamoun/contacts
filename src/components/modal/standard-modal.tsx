@@ -1,40 +1,57 @@
-import * as React from 'react';
+import React, {useCallback, useEffect} from 'react';
+import {Dimensions, BackHandler} from 'react-native';
 
-import type {DefaultTheme} from 'styled-components/native';
+import {theme} from '@styles';
 
+import {Flex} from '../flex';
+import type {FlexProps} from '../flex';
+
+import type {ModalProps} from './modal';
 import {Modal} from './modal';
-import type {ModalContentProps} from './modal-content';
-import {ModalContent} from './modal-content';
 
-interface StandardModalProps extends ModalContentProps {
-  show: boolean;
-  onClose?: () => void;
-  backdropCanClose?: boolean;
-  centerVertically?: boolean;
-  heading: string;
-  customBackgroundColor?: keyof DefaultTheme['colors'];
-  children: React.ReactElement;
+interface StandardModalProps extends ModalProps {
+  fullWidth?: boolean;
+  contentProps?: FlexProps;
 }
 
+const getFullWidth = () => Dimensions.get('screen').width - theme.sizes.modalPaddingX * 2;
+
 const StandardModal = ({
-  show,
-  onClose,
-  backdropCanClose,
-  customBackgroundColor,
-  centerVertically,
   children,
+  fullWidth,
+  contentProps = {},
+  centerVertically = true,
+  onClose,
+  show,
   ...props
-}: StandardModalProps) => (
-  <Modal
-    customBackgroundColor={customBackgroundColor}
-    backdropCanClose={backdropCanClose}
-    show={show}
-    centerVertically={centerVertically}
-    onClose={onClose}>
-    <ModalContent {...props} onClose={onClose}>
-      {children}
-    </ModalContent>
-  </Modal>
-);
+}: StandardModalProps) => {
+  const handleBackButtonClick = useCallback(() => {
+    if (show && onClose) {
+      onClose();
+
+      return true;
+    }
+
+    return false;
+  }, [onClose, show]);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+    };
+  }, [handleBackButtonClick]);
+
+  return (
+    <Modal onClose={onClose} show={show} centerVertically={centerVertically} {...props}>
+      <Flex flexGrow={1} justifyContent="center">
+        <Flex width={fullWidth ? getFullWidth() : undefined} maxWidth="parentModalMaxWidth" {...contentProps}>
+          {children}
+        </Flex>
+      </Flex>
+    </Modal>
+  );
+};
 
 export {StandardModal};
