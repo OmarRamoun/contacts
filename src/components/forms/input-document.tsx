@@ -89,7 +89,7 @@ function DocumentPreviewDoc({
             }),
           }}>
           <View style={styles}>
-            {remove && <Icon name="person" />}
+            {remove && <Icon name="cross" />}
             <Preview uri={uri} disableOnpress fileName={fileName} />
           </View>
         </Animated.View>
