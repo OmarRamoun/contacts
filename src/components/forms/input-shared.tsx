@@ -1,7 +1,8 @@
 import type React from 'react';
 
-import type {FieldInputProps, FieldMetaProps, FieldHelperProps} from 'formik';
 import type {DefaultTheme} from 'styled-components/native';
+
+import type {FieldInputProps, FieldMetaProps, FieldHelperProps} from '@lib';
 
 import type {FlexProps} from '../flex';
 import type {TagObject} from '../tag';

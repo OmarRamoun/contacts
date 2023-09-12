@@ -1,7 +1,6 @@
 import React from 'react';
 
-import {useField} from 'formik';
-
+import {useField} from '@lib';
 import {ensureArray} from '@utils';
 
 import type {InputSelectProps} from './input-select';
