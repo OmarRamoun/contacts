@@ -1,14 +1,27 @@
 import React from 'react';
 
-import {Flex, Typography} from '@components';
+/* import {SafeAreaProvider, useSafeArea} from 'react-native-safe-area-context'; */
+
+import {ModalContainer, ToastContainer, ActionSheetContainer} from '@components';
+import {HomeView} from '@screens';
+import {ThemeProvider} from '@styles';
 
 function App(): JSX.Element {
   return (
-    <Flex bg="green">
-      <Typography color="blue">should this work now?</Typography>
-      <Typography>this will isa work?</Typography>
-    </Flex>
+    <ThemeProvider>
+      <AppInner />
+    </ThemeProvider>
   );
 }
+
+const AppInner = () => (
+  <ModalContainer displayProps={{noPositionTop: true}}>
+    <ActionSheetContainer>
+      <ToastContainer>
+        <HomeView />
+      </ToastContainer>
+    </ActionSheetContainer>
+  </ModalContainer>
+);
 
 export {App};
