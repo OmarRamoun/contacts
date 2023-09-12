@@ -96,6 +96,7 @@ const radii = {
 
 const colors = {
   clear: 'rgba(0, 0, 0, 0)',
+  blackAlt: '#444444',
   darkBlue: '#25293F',
   darkBlueBlockedModal: '#25293FB3',
   darkBlueOpacityHalf: '#25293F80',
@@ -128,6 +129,7 @@ const colors = {
   grey: '#D9DDE4',
   white: '#FFFFFF',
   black: '#000000',
+  transBlack: '#00000020',
   orange: '#EE8E36',
   orangeLow: '#FFDA7980',
   green: '#20B326',
@@ -279,6 +281,26 @@ const shadow = {
   subtle: '0 2px 4px rgba(0,0,0,0.1)',
 };
 
+const primaryColor: {
+  default: keyof typeof colors;
+  alt: keyof typeof colors;
+  dark: keyof typeof colors;
+} = {
+  default: 'black',
+  alt: 'blackAlt',
+  dark: 'darkGrey',
+};
+
+const secondaryColor: {
+  default: keyof typeof colors;
+  alt: keyof typeof colors;
+  dark: keyof typeof colors;
+} = {
+  default: 'blue',
+  alt: 'blueDarkened',
+  dark: 'darkBlue',
+};
+
 const theme = {
   textStyles,
   space,
@@ -289,6 +311,8 @@ const theme = {
   button,
   zIndex,
   shadow,
+  primaryColor,
+  secondaryColor,
 };
 
 const ThemeProvider = (props: Omit<React.ComponentProps<typeof TP>, 'theme'>) => (
