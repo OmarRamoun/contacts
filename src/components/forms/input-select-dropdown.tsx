@@ -31,7 +31,7 @@ const InputSelectDropdown = ({maxHeight, options, value, onSelect, multiple = fa
   function renderChild(option: any): any {
     return (
       <>
-        <Typography numberOfLines={1} textStyle="small" color="darkBlue">
+        <Typography numberOfLines={1} textStyle="small" color="black">
           {option.label || option.value}
         </Typography>
 
