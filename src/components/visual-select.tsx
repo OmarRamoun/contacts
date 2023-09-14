@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import type {FlatListProps} from 'react-native';
 
 import {Flex} from './flex';
-import {InputText} from './forms/input-text';
+import {InputField} from './forms/input-field/input-field';
 import {getInputColor} from './forms/input-utils';
 import {Icon} from './icon';
 import {FlatList} from './lists/flat-list';
@@ -73,10 +73,10 @@ const VisualSelect = ({
     <Flex flexGrow={1} flexBasis={0} alignItems="stretch">
       {filter ? (
         <Flex flexGrow={0} p={filterPadding}>
-          <InputText
+          <InputField
+            inputTextProps={{placeholder: filterPlaceholder}}
             onValueChange={setFilterText}
             value={filterText}
-            placeholder={filterPlaceholder}
             leftSlot={(focused, error, disabled) => (
               <Flex pl="2">
                 <Icon name="search" size="md" color={getInputColor(error, focused, disabled)} />
