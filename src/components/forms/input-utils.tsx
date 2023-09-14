@@ -20,7 +20,7 @@ export const getInputColor = (
 ): keyof DefaultTheme['colors'] => {
   // eslint-disable-line max-params, prettier/prettier
   if (error && !disabled) return 'red';
-  if (focused && !disabled) return theme.primaryColor.default;
+  if (focused && !disabled) return theme.primaryColor.alt;
   return fallback;
 };
 
@@ -30,7 +30,7 @@ export const StyledInputContainer = styled(Flex)<StyledInputContainerProps>`
   min-height: ${(props) => props.theme.sizes.inputHeight}px;
   border-width: 2px;
   border-color: ${(props) => props.theme.colors[getInputColor(!!props.error, !!props.focused, !!props.disabled)]};
-  border-radius: ${(props) => props.theme.radii.md}px;
+  border-radius: ${(props) => props.theme.radii.lg}px;
   background-color: ${(props) => props.theme.colors.white};
 `;
 
