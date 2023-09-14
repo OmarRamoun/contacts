@@ -19,6 +19,8 @@ export * from './steps';
 export * from './steps-observation';
 export * from './visual-select';
 export * from './status';
+export * from './status-bar';
+export * from './safe-area';
 export * from './info-text';
 
 export * from './button/button';
@@ -60,7 +62,9 @@ export * from './tabs/tabs-pages';
 
 export * from './forms/form';
 export * from './forms/input-formik';
-export * from './forms/input-text';
+export * from './forms/input-field/input-text';
+export * from './forms/input-field/input-container';
+export * from './forms/input-field/input-field';
 export * from './forms/input-toggle';
 export * from './forms/input-checkbox';
 export * from './forms/input-color';
@@ -70,5 +74,8 @@ export * from './forms/label';
 export * from './forms/input-tag-field';
 export * from './forms/form-modal';
 export * from './forms/form-error-modal';
+
+export * from './menu/menu-avatar-sidebar';
+export * from './menu/menu-collapse';
 
 export * from './transition/transition-container';
