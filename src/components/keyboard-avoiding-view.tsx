@@ -5,7 +5,7 @@ import {Keyboard, Animated, ScrollView} from 'react-native';
 
 interface KeyboardAvoidingViewProps {
   children: React.ReactNode;
-  bottomInset: number;
+  bottomInset?: number;
   onShow?: (height: number, duration: number) => void;
   onHide?: (duration: number) => void;
   style?: ViewStyle;
