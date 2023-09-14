@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useContext, useRef, useCallback} from 'react';
 import type {LayoutChangeEvent} from 'react-native';
-import {View, Dimensions, Keyboard} from 'react-native';
+import {View, Dimensions, Keyboard, Platform} from 'react-native';
 
 import styled from 'styled-components/native';
-import type {PaddingProps} from 'styled-system';
+import type {PaddingProps, MarginProps} from 'styled-system';
 import {padding} from 'styled-system';
 
+import {useBackButton} from '@hooks';
 import type {theme} from '@styles';
 
 import {Button} from '../button/button';
@@ -35,15 +36,17 @@ interface ActionSheetProps extends FlexProps {
   sheetWidth?: number | string;
   onClose?: () => void;
   disabled?: boolean;
+  overrideMargin?: {[key in keyof MarginProps]: number};
   overridePadding?: {[key in keyof PaddingProps]: number};
   overrideBorderRadius?: keyof typeof theme.radii;
   overrideBackdropColor?: string;
 }
 
-const StyledActionSheetContainer = styled(Flex)<PaddingProps & Pick<ActionSheetProps, 'overrideBorderRadius'>>`
+const StyledActionSheetContainer = styled(Flex)<
+  MarginProps & PaddingProps & Pick<ActionSheetProps, 'overrideBorderRadius'>
+>`
   box-shadow: 0px 2px 4px ${(props) => props.theme.colors.boxShadow};
   border-radius: ${(props) => props.theme.radii[props.overrideBorderRadius ?? 'md']}px;
-  border: 1px solid ${(props) => props.theme.colors.grey};
   padding: ${(props) => props.theme.space[2]}px ${(props) => props.theme.space[4]}px;
   background-color: ${(props) => props.theme.colors.white};
   ${padding}
@@ -105,6 +108,7 @@ const ActionSheet = ({
   visible,
   sheetWidth = 200,
   onClose,
+  overrideMargin,
   overridePadding,
   overrideBorderRadius,
   overrideBackdropColor,
@@ -124,6 +128,15 @@ const ActionSheet = ({
     },
     [setActionSheetHeight, actionSheetHeight],
   );
+
+  useBackButton(() => {
+    if (visible) {
+      onClose?.();
+      return true;
+    }
+
+    return false;
+  });
 
   useEffect(() => {
     const subscriptions = [
@@ -151,8 +164,25 @@ const ActionSheet = ({
           <StyledActionSheetContainer
             width={`${actualWidth}px`}
             {...overridePadding}
+            {...overrideMargin}
             overrideBorderRadius={overrideBorderRadius}
-            onLayout={onActionSheetLayout}>
+            onLayout={onActionSheetLayout}
+            style={{
+              ...Platform.select({
+                ios: {
+                  shadowColor: 'rgba(0, 0, 0, 1)',
+                  shadowOpacity: 0.5,
+                  shadowRadius: 5,
+                  shadowOffset: {
+                    height: 5,
+                    width: 5,
+                  },
+                },
+                android: {
+                  elevation: 5,
+                },
+              }),
+            }}>
             {items
               ? items.map((item) => (
                   <Button type={item.type || 'tertiary'} {...item} align="space-between" key={item.label}>
