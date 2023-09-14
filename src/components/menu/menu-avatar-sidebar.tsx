@@ -8,7 +8,6 @@ import {getInitialsString} from '@utils';
 
 import {Avatar} from '../avatar/avatar';
 import {Box} from '../box';
-import {Button} from '../button/button';
 import type {FlexProps} from '../flex';
 import {Flex} from '../flex';
 import {InfoText} from '../info-text';
@@ -27,31 +26,25 @@ export interface AvatarDataTypes {
     onPress?: () => void;
   }[];
   isAdmin: boolean;
-  logOut: () => void;
+  lastOptionHandler: () => void;
 }
 
 interface SidebarProps extends FlexProps {
   avatarData: AvatarDataTypes;
-  hideSidebar: () => void;
 }
 
 const StyledSidebar = styled(Box)`
-  height: ${Platform.OS === 'web' ? '430px' : '390px'};
-  border: 2px solid black;
-  border-radius: 4px;
+  height: ${Platform.OS === 'web' ? '430px' : '320px'};
   flex-direction: column;
   justify-content: space-between;
   padding-horizontal: 10px;
   padding-bottom: 20px;
+  padding-top: 20px;
   box-shadow: 2px 2px 8px ${theme.colors.boxShadow};
 `;
 
-const MenuAvatarSidebar = ({avatarData, hideSidebar}: SidebarProps) => (
+const MenuAvatarSidebar = ({avatarData}: SidebarProps) => (
   <StyledSidebar>
-    <Flex flexDirection="row" justifyContent="flex-end" mb={-3}>
-      <Button onPress={hideSidebar} icon="cross" type="tertiary" buttonSize="md" />
-    </Flex>
-
     <Flex mx={2} mb={4} flexDirection="row" alignItems="center" justify-content="space-between">
       <Flex mr={2}>
         <Avatar
@@ -60,7 +53,7 @@ const MenuAvatarSidebar = ({avatarData, hideSidebar}: SidebarProps) => (
             avatarData.firstName && avatarData.lastName && getInitialsString(avatarData.firstName, avatarData.lastName)
           }
           size={60}
-          borderColor={theme.primaryColor.default}
+          borderColor="darkBlue"
           borderWidth={4}
         />
       </Flex>
@@ -75,7 +68,7 @@ const MenuAvatarSidebar = ({avatarData, hideSidebar}: SidebarProps) => (
 
           <Box ml={2} px={2} alignItems="center" color="white" bg="darkBlue" justifyContent="center" borderRadius="md">
             <Typography textStyle="extraSmall" color="white">
-              {avatarData.isAdmin ? 'Admin' : 'Staff'}
+              {avatarData.isAdmin ? 'Admin' : 'User'}
             </Typography>
           </Box>
         </Flex>
@@ -90,12 +83,12 @@ const MenuAvatarSidebar = ({avatarData, hideSidebar}: SidebarProps) => (
 
     <Flex flex={4} flexDirection="column">
       <Flex flexDirection="column">
-        <Box mb={2} bg="transparent" flexDirection="row" justifyContent="space-between" p={2}>
+        <Box mb={2} bg="transparent" flexDirection="row" justifyContent="space-between" p={2} pb={0}>
           <Typography textStyle="small" color="grey">
             Switch Account
           </Typography>
 
-          <Box py="2px" px={1} bg="lightGrey1" borderRadius="md">
+          <Box p="2px" px={1} bg="lightGrey1" borderRadius="md">
             <Typography textStyle="extraSmall" color="darkBlueOpacityHalf">
               Coming Soon
             </Typography>
@@ -103,7 +96,7 @@ const MenuAvatarSidebar = ({avatarData, hideSidebar}: SidebarProps) => (
         </Box>
 
         {avatarData.menuItemsData.map((item, idx) => (
-          <Pressable key={`sidebar-menu-item-${idx}`} to={item.to} onPress={item.onPress}>
+          <Pressable key={`sidebar-menu-item-${idx}`} to={item.to} onPress={item.onPress} mb={0}>
             {item.text}
           </Pressable>
         ))}
@@ -111,16 +104,15 @@ const MenuAvatarSidebar = ({avatarData, hideSidebar}: SidebarProps) => (
     </Flex>
 
     <Flex>
-      <Pressable onPress={avatarData.logOut}>Log Out</Pressable>
+      <Pressable onPress={avatarData.lastOptionHandler} onPressStyles={{backgroundColor: theme.colors.pink2}}>
+        <Typography textStyle="body" color="red">
+          Log Out
+        </Typography>
+      </Pressable>
 
       <Flex mx={2} flexDirection="row" alignItems="center">
-        <InfoText text="Privacy" underline onPress={() => openURL('https://nurserystory.co.uk/privacy-policy/')} />
-        <InfoText text=" and " />
-        <InfoText
-          text="InfoText"
-          underline
-          onPress={() => openURL('https://nurserystory.co.uk/terms-and-conditions-nursery-story-software/')}
-        />
+        <InfoText text="&copy; Built By " />
+        <InfoText text="Omar Ramoun" underline onPress={() => openURL('https://omarramoun.com')} />
       </Flex>
     </Flex>
   </StyledSidebar>

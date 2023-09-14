@@ -1,76 +1,44 @@
 import React, {useState} from 'react';
-import {Platform, TouchableWithoutFeedback} from 'react-native';
+import {Platform} from 'react-native';
 
 import {theme} from '@styles';
-import {getInitialsString} from '@utils';
 
 import {ActionSheet, ActionSheetPosition} from '../action-sheet/action-sheet';
 import {Avatar} from '../avatar/avatar';
 import {Flex} from '../flex';
-import {Icon} from '../icon';
+import {TouchableWithoutFeedback} from '../touchable-without-feedback';
 
 import type {AvatarDataTypes} from './menu-avatar-sidebar';
 import {MenuAvatarSidebar} from './menu-avatar-sidebar';
 
 interface MenuCollapseProps {
-  onPress: () => void;
-  collapsed: boolean;
   avatarData?: AvatarDataTypes;
 }
 
-const MenuCollapse = ({onPress, collapsed, avatarData}: MenuCollapseProps) => {
+const MenuCollapse = ({avatarData}: MenuCollapseProps) => {
   const [showSidebar, setShowSidebar] = useState(false);
-
-  const firstName = avatarData?.firstName || '';
-  const lastName = avatarData?.lastName || '';
 
   const toggleSidebar = () => setShowSidebar(!showSidebar);
 
   return (
-    <Flex
-      flexBasis="auto"
-      flexGrow={0}
-      height={collapsed ? 22 : 32}
-      backgroundColor="highlighted"
-      alignItems="center"
-      justifyContent="center">
+    <Flex>
       {avatarData && (
         <ActionSheet
           visible={showSidebar}
           onClose={toggleSidebar}
-          sheetWidth={Platform.OS === 'web' ? 280 : 260}
+          sheetWidth={Platform.OS === 'web' ? 280 : 230}
           overridePadding={{p: 0}}
-          overrideBorderRadius="lg"
+          overrideMargin={{mx: 2, my: 1}}
+          overrideBorderRadius="xlg"
           overrideBackdropColor={theme.colors.highlighted}
           position={ActionSheetPosition.Right}
-          side={ActionSheetPosition.Right}
-          customContent={<MenuAvatarSidebar avatarData={avatarData} hideSidebar={toggleSidebar} />}>
+          side={ActionSheetPosition.Left}
+          customContent={<MenuAvatarSidebar avatarData={avatarData} />}>
           <TouchableWithoutFeedback onPress={toggleSidebar}>
-            <Avatar
-              image={avatarData?.avatarUrl}
-              size={collapsed ? 52 : 80}
-              initials={
-                // prettier-ignore
-                firstName ?? lastName ?? getInitialsString(firstName ?? '', lastName)
-              }
-              borderColor="primaryDark"
-              borderWidth={collapsed ? 3 : 5}
-              style={{
-                shadowColor: theme.colors.boxShadow2,
-                shadowOffset: {width: -3, height: 8},
-                shadowRadius: 10,
-                marginBottom: 18,
-              }}
-            />
+            <Avatar image={avatarData.avatarUrl} size="sm" borderColor={theme.primaryColor.default} />
           </TouchableWithoutFeedback>
         </ActionSheet>
       )}
-
-      <TouchableWithoutFeedback onPress={onPress}>
-        <Flex>
-          <Icon name={collapsed ? 'show-sidebar' : 'hide-sidebar'} color="white" />
-        </Flex>
-      </TouchableWithoutFeedback>
     </Flex>
   );
 };
