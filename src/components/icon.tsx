@@ -37,7 +37,7 @@ const StyledIconWrapper = styled(Box)`
   ${space}
 `;
 
-const Icon = ({name, size = 'md', color = 'darkBlue'}: IconProps) => {
+const Icon = ({name, size = 'md', color = theme.primaryColor.default}: IconProps) => {
   const iconColor = theme.colors[color];
   const IconComp = iconMap[name];
 
