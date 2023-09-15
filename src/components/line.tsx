@@ -5,9 +5,9 @@ import {position} from 'styled-system';
 
 import {Flex} from './flex';
 
-type LineSizes = 'xsm' | 'sm' | 'md' | 'lg';
+type LineSizes = 'xsm' | 'sm' | 'smd' | 'md' | 'lg';
 
-export const sizeMap: {[key: string]: number} = {sm: 1, md: 3, lg: 5};
+export const sizeMap: {[key: string]: number} = {xsm: 0.5, sm: 1, smd: 2, md: 3, lg: 5};
 
 const Line = styled(Flex)<
   PositionProps & {
