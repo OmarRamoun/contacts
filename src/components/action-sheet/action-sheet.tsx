@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, {useState, useEffect, useContext, useRef, useCallback} from 'react';
 import type {LayoutChangeEvent} from 'react-native';
 import {View, Dimensions, Keyboard, Platform} from 'react-native';
