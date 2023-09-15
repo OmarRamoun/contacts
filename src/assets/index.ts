@@ -104,6 +104,10 @@ import registerMyDayIcon from './svg/register-my-day-icon.svg';
 import registerDueIcon from './svg/register-due-icon.svg';
 import download2 from './svg/download2.svg';
 import weekly from './svg/weekly-icon.svg';
+import phone from './svg/phone.svg';
+import envelope from './svg/envelope.svg';
+import infoOutline from './svg/info-outline.svg';
+
 // PNGs
 import LogoImage from './ns-logo-image.png';
 import LogoText from './ns-logo-text.png';
@@ -215,6 +219,9 @@ export const iconMap = {
   'register-due-icon': registerDueIcon,
   download2,
   weekly,
+  phone,
+  envelope,
+  'info-outline': infoOutline,
 };
 
 export const pngMap = {
