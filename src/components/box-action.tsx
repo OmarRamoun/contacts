@@ -17,14 +17,14 @@ interface BoxActionProps extends FlexProps {
   disabled?: boolean;
 }
 
-const getIconColor = (hovered: boolean, alt: boolean) => {
-  if (alt) return hovered ? 'grey' : 'darkBlue';
-  return hovered ? 'white' : 'darkBlue';
+const getIconColor = (hovered: boolean, pressed: boolean, alt: boolean) => {
+  if (alt) return hovered || pressed ? 'grey' : 'darkBlue';
+  return hovered || pressed ? 'white' : 'darkBlue';
 };
 
-const getActionBackgroundColor = (hovered: boolean, alt: boolean) => {
+const getActionBackgroundColor = (hovered: boolean, pressed: boolean, alt: boolean) => {
   if (alt) return 'white';
-  return hovered ? 'darkBlue' : 'grey';
+  return hovered || pressed ? 'darkBlue' : 'grey';
 };
 
 const ActionContainer = styled(Flex)<{
@@ -32,7 +32,7 @@ const ActionContainer = styled(Flex)<{
   pressed: boolean;
   alt: boolean;
 }>`
-  background-color: ${(props) => props.theme.colors[getActionBackgroundColor(props.hovered, props.alt)]};
+  background-color: ${(props) => props.theme.colors[getActionBackgroundColor(props.hovered, props.pressed, props.alt)]};
 `;
 
 const BoxAction = ({onPress, icon = 'plus', alt, width, height, disabled = false, ...props}: BoxActionProps) => (
@@ -48,7 +48,7 @@ const BoxAction = ({onPress, icon = 'plus', alt, width, height, disabled = false
         alt={!!alt}
         {...mouseProps}
         {...props}>
-        <Icon name={icon} color={getIconColor(hovered, !!alt)} />
+        <Icon name={icon} color={getIconColor(hovered, pressed, !!alt)} />
       </ActionContainer>
     )}
   </ButtonInteraction>
