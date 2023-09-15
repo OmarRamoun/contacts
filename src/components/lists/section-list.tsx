@@ -28,9 +28,9 @@ const SectionList = ({
       flexBasis: 0,
     }}
     renderItem={renderItem}
-    {...props}
     keyExtractor={(item) => `${item[keyField]}`}
     ListFooterComponent={() => <ListFooterComponent canPaginate={canPaginate} />}
+    {...props}
   />
 );
 
