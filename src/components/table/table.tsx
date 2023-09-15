@@ -20,7 +20,7 @@ const StyledTableContainer = styled(Flex)<{
   rounded: boolean;
   flexGrow?: number;
 }>`
-  border-radius: ${(props) => (props.rounded ? props.theme.radii.md : 0)}px;
+  border-radius: ${(props) => (props.rounded ? props.theme.radii.xlg : 0)}px;
   border-width: ${(props) => (props.outlined ? '1px' : '0')};
   border-bottom-width: ${(props) => (props.outlined && !props.hideBottomOutline ? '1px' : '0')};
   border-bottom-right-radius: ${(props) => (props.rounded && !props.hideBottomOutline ? props.theme.radii.md : 0)}px;

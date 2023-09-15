@@ -99,7 +99,7 @@ const TableItem = ({
                     {title}
                   </Typography>
                   <LockedKeyContainer>
-                    <Icon name="cart" size="vsm" />
+                    <Icon name="lock" size="vsm" />
                   </LockedKeyContainer>
                 </Flex>
               )}

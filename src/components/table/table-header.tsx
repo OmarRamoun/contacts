@@ -69,8 +69,8 @@ const LeftAccessory = ({
     style={{zIndex: 10}}
     {...props}>
     {headerIcon ? (
-      <Flex mr={3}>
-        <Icon name={headerIcon} size="md" color="blue" />
+      <Flex mr={1}>
+        <Icon name={headerIcon} size="md" color={theme.primaryColor.default} />
       </Flex>
     ) : null}
     {children}
@@ -78,7 +78,7 @@ const LeftAccessory = ({
 );
 
 const RightAccessory = ({children, flexDirection = 'row', align = 'center', ...props}: AccessoryProps) => (
-  <Flex px="4" flexGrow={0} flexDirection={flexDirection} alignItems={align} style={{zIndex: 10}} {...props}>
+  <Flex px="2" flexGrow={0} flexDirection={flexDirection} alignItems={align} style={{zIndex: 10}} {...props}>
     {children}
   </Flex>
 );
@@ -106,7 +106,7 @@ const TableHeader = ({
     overrideBackgroundColor={overrideBackgroundColor}
     showShadow={showShadow}
     showBottomBorder={showBottomBorder}>
-    {showLeftColumn && <Flex width="6px" height="100%" backgroundColor={theme.colors.blue} mr="12px" />}
+    {showLeftColumn && <Flex width="8px" height="100%" backgroundColor={theme.primaryColor.default} mr="12px" />}
     {left}
     {center}
     {right}
