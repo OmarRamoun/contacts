@@ -179,7 +179,7 @@ const Menu = ({
           </Flex>
         </ScrollView>
 
-        <MenuCollapse avatarData={avatarData} collapsed={collapsed} onPress={toggleCollapsed} />
+        <MenuCollapse avatarData={avatarData} />
       </ImageBackground>
     </Flex>
   );
