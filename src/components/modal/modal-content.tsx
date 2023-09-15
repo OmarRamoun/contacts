@@ -35,7 +35,7 @@ const ModalContent = ({
   minHeight,
   maxWidth,
   scrollHeight,
-  width = 'modalLargeWidth',
+  width = 'modalSmallWidth',
 }: ModalContentProps) => (
   <Box width={width} minHeight={minHeight ? theme.sizes.modalLargerHeight : 0} maxWidth={maxWidth}>
     <Table rounded outlined bg="white">

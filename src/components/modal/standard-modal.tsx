@@ -1,6 +1,7 @@
-import React, {useCallback, useEffect} from 'react';
-import {Dimensions, BackHandler} from 'react-native';
+import React from 'react';
+import {Dimensions} from 'react-native';
 
+import {useBackButton} from '@hooks';
 import {theme} from '@styles';
 
 import {Flex} from '../flex';
@@ -25,7 +26,7 @@ const StandardModal = ({
   show,
   ...props
 }: StandardModalProps) => {
-  const handleBackButtonClick = useCallback(() => {
+  useBackButton(() => {
     if (show && onClose) {
       onClose();
 
@@ -33,15 +34,7 @@ const StandardModal = ({
     }
 
     return false;
-  }, [onClose, show]);
-
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
-
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
-    };
-  }, [handleBackButtonClick]);
+  });
 
   return (
     <Modal onClose={onClose} show={show} centerVertically={centerVertically} {...props}>
