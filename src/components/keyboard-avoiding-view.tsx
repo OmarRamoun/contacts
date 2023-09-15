@@ -9,9 +9,17 @@ interface KeyboardAvoidingViewProps {
   onShow?: (height: number, duration: number) => void;
   onHide?: (duration: number) => void;
   style?: ViewStyle;
+  contentContainerStyle?: ViewStyle;
 }
 
-const KeyboardAvoidingView = ({children, bottomInset = 0, onShow, onHide, style = {}}: KeyboardAvoidingViewProps) => {
+const KeyboardAvoidingView = ({
+  children,
+  bottomInset = 0,
+  onShow,
+  onHide,
+  style = {},
+  contentContainerStyle = {},
+}: KeyboardAvoidingViewProps) => {
   const layoutPaddingRef = useRef<Animated.Value>(new Animated.Value(bottomInset));
 
   const onKeyboardShow = useCallback(
@@ -52,7 +60,7 @@ const KeyboardAvoidingView = ({children, bottomInset = 0, onShow, onHide, style 
 
   return (
     <Animated.View style={{...style, flex: 1, paddingBottom: layoutPaddingRef.current}}>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>{children}</ScrollView>
+      <ScrollView contentContainerStyle={{flexGrow: 1, ...contentContainerStyle}}>{children}</ScrollView>
     </Animated.View>
   );
 };
