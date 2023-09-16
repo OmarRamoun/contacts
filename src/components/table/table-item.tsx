@@ -115,7 +115,7 @@ const TableItem = ({
           ) : null}
 
           {right && !overrideRightHeight ? (
-            <Flex flexGrow={0} ml="2">
+            <Flex flexGrow={0} ml={overrideRightMargin || '2'}>
               {right}
             </Flex>
           ) : null}

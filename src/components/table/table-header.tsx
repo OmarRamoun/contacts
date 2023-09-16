@@ -62,7 +62,7 @@ const LeftAccessory = ({
   ...props
 }: LeftAccessoryProps) => (
   <Flex
-    px={!showLeftColumn ? '4' : '0'}
+    px={!showLeftColumn ? '2' : '0'}
     flexGrow={1}
     flexDirection={flexDirection}
     alignItems={align}
