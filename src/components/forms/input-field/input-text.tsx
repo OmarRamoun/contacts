@@ -29,6 +29,7 @@ const InputText = ({
   onSubmit,
   onValueChange,
   onBlur,
+  onFocus,
   setFocused,
   rightSlot,
   helpers,
@@ -37,10 +38,14 @@ const InputText = ({
 }: InputTextProps) => {
   const field = useRef<TI | null>(null);
 
-  const onFieldFocus = useCallback(async () => {
-    setFocused?.(true);
-    await helpers?.setTouched(true);
-  }, [setFocused]);
+  const onFieldFocus = useCallback(
+    async (e: any) => {
+      setFocused?.(true);
+      onFocus?.(e);
+      await helpers?.setTouched(true);
+    },
+    [setFocused],
+  );
 
   const onFieldChange = useCallback(
     async (text: string) => {
@@ -83,7 +88,7 @@ const InputText = ({
         {
           textAlignVertical: Platform.OS === 'android' && numberOfLines && numberOfLines > 1 ? 'top' : undefined,
           height: numberOfLines && numberOfLines > 1 ? mainTheme.sizes.inputHeight * numberOfLines : 'auto',
-          width: '100%',
+          /* width: '100%', */
         },
         style,
       ]}

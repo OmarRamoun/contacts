@@ -22,6 +22,7 @@ export interface InputContainerProps
   children(props: InputTextProps): React.ReactNode;
   numberOfLines?: number;
   onBlur?: (e: any) => void;
+  onFocus?: (e: any) => void;
   inputTextProps?: TIProps;
   style?: ViewStyle;
   onFocusStyle?: ViewStyle;
@@ -41,6 +42,7 @@ const InputContainer = ({
   labelTextStyle,
   onDarkBackground,
   onBlur,
+  onFocus,
   children,
   leftSlot,
   rightSlot,
@@ -76,6 +78,7 @@ const InputContainer = ({
           helpers,
           onValueChange,
           onBlur,
+          onFocus,
           setFocused,
           ...inputTextProps,
         })}
