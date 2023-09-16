@@ -79,3 +79,4 @@ export * from './menu/menu-avatar-sidebar';
 export * from './menu/menu-collapse';
 
 export * from './transition/transition-container';
+export * from './transition/transition-shared';
