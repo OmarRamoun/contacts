@@ -91,6 +91,8 @@ const radii = {
   sm: 2,
   md: 4,
   lg: 10,
+  xlg: 14,
+  xxlg: 18,
   toggle: sizes.toggleHeightInner / 2,
 };
 
@@ -105,6 +107,7 @@ const colors = {
   inactiveGrey: '#B4B4B4',
   neutralGrey: '#D9DDE4',
   lightGrey2: '#FAFAFA',
+  shadowColor: '#171717',
   secondaryYellow: '#FFF282',
   lightBlue: '#A1E3F2',
   lightBlue1: '#A1E3F24D',
@@ -263,13 +266,13 @@ const textStyles = {
     fontSize: '14px',
     lineHeight: '14px',
   },
-  subscriptionInfo: {
+  sectionHeader: {
     ...commonTextStyle,
     fontWeight: '400',
     fontSize: '18px',
     lineHeight: '21px',
   },
-  subscriptionInfoBold: {
+  sectionHeaderBold: {
     ...commonTextStyle,
     fontWeight: '700',
     fontSize: '18px',
