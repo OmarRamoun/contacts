@@ -177,12 +177,30 @@
     {
       "files": ["*.ts", "*.tsx"],
       "plugins": ["@typescript-eslint/eslint-plugin", "react"],
-      "extends": ["airbnb-base", "eslint:recommended", "plugin:import/recommended", "plugin:react/recommended"],
+      "extends": [
+        "airbnb-base",
+        "eslint:recommended",
+        "plugin:import/recommended",
+        "plugin:react/recommended",
+        "prettier"
+      ],
       "rules": {
         "no-confusing-arrow": "off",
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
-        "indent": "off",
+        "indent": [
+          "error",
+          2,
+          {
+            "SwitchCase": 1,
+            "ignoredNodes": [
+              "ConditionalExpression",
+              "flatTernaryExpressions",
+              "offsetTernaryExpressions",
+              "MemberExpression"
+            ]
+          }
+        ],
         "import/order": [
           "error",
           {
