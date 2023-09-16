@@ -36,6 +36,7 @@ const getTitleMargin = ({flexDirection}: FlexDirectionProps) => {
 
   return {
     mb: 1,
+    ml: 1,
   } as MarginProps;
 };
 
