@@ -2,6 +2,8 @@ import React from 'react';
 
 import styled from 'styled-components/native';
 
+import {theme} from '@styles';
+
 import {ButtonInteraction} from './button/button-interaction';
 import type {FlexProps} from './flex';
 import {Flex} from './flex';
@@ -19,12 +21,12 @@ interface BoxActionProps extends FlexProps {
 
 const getIconColor = (hovered: boolean, pressed: boolean, alt: boolean) => {
   if (alt) return hovered || pressed ? 'grey' : 'darkBlue';
-  return hovered || pressed ? 'white' : 'darkBlue';
+  return hovered || pressed ? 'white' : theme.primaryColor.default;
 };
 
 const getActionBackgroundColor = (hovered: boolean, pressed: boolean, alt: boolean) => {
   if (alt) return 'white';
-  return hovered || pressed ? 'darkBlue' : 'grey';
+  return hovered || pressed ? theme.primaryColor.default : 'grey';
 };
 
 const ActionContainer = styled(Flex)<{
