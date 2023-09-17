@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
 
+import {useSelector} from 'react-redux';
+
 import {
   Flex,
   Box,
@@ -16,31 +18,30 @@ import {
   Pressable,
   ConfirmBox,
   StandardModal,
+  Spinner,
 } from '@components';
+import type {RootState} from '@state/store';
 import {theme} from '@styles';
+import type {ViewNavigationProps, RouteNavigationProps, ContactItem} from '@types';
 
-interface ContactItem {
-  id: number;
-  avatar: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  organization: string;
+interface InfoViewProps {
+  navigation?: ViewNavigationProps<'Info'>;
+  route?: RouteNavigationProps<'Info'>;
 }
 
-const data: ContactItem = {
-  id: 1,
-  avatar: 'https://placekitten.com/200/200',
-  firstName: 'ahmd',
-  lastName: 'good',
-  phone: '+201093333333',
-  email: 'ahmd@org.com',
-  organization: 'org',
-};
-
-const InfoView = () => {
+const InfoView = ({navigation, route}: InfoViewProps) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const {id: contactId}: {id?: ContactItem['id']} = route?.params ?? {};
+
+  const contacts = useSelector((state: RootState) => state.contacts.value);
+
+  const contact = contactId !== undefined ? contacts[contactId] : undefined;
+
+  if (!contact) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <Flex flex={1} m={2}>
@@ -50,17 +51,17 @@ const InfoView = () => {
             showShadow
             showBottomBorder
             actionIcon="back"
-            onAction={() => undefined}
+            onAction={() => navigation?.goBack()}
             left={
               <TableHeader.LeftAccessory showLeftColumn headerIcon="user-profile">
                 <Typography>
-                  {data.firstName} {data.lastName}
+                  {contact?.firstName} {contact?.lastName}
                 </Typography>
               </TableHeader.LeftAccessory>
             }
             right={
               <TableHeader.RightAccessory>
-                <TouchableOpacity onPress={() => undefined}>
+                <TouchableOpacity onPress={() => navigation?.navigate('Form')}>
                   <Box bg="grey" p={2} borderRadius={8}>
                     <Icon name="edit-pencil" size="md" />
                   </Box>
@@ -70,14 +71,14 @@ const InfoView = () => {
           />
 
           <Flex alignItems="center" justifyContent="center" m={5}>
-            <Avatar size="lg" image={data.avatar} borderColor="black" borderWidth={5} />
+            <Avatar size="lg" image={contact?.avatar} borderColor="black" borderWidth={5} />
           </Flex>
 
           <TableBody shouldScroll>
             <ScrollView>
               <TableItem
                 title="First Name"
-                subtitle={data.firstName}
+                subtitle={contact?.firstName}
                 left={<Typography textStyle="h1">F</Typography>}
                 right={
                   <Typography>
@@ -88,7 +89,7 @@ const InfoView = () => {
 
               <TableItem
                 title="Last Name"
-                subtitle={data.lastName}
+                subtitle={contact?.lastName}
                 left={<Typography textStyle="h1">L</Typography>}
                 right={
                   <Typography>
@@ -99,7 +100,7 @@ const InfoView = () => {
 
               <TableItem
                 title="Phone"
-                subtitle={data.phone}
+                subtitle={contact?.phone}
                 left={<Typography textStyle="h1">P</Typography>}
                 right={<Icon name="phone" />}
                 selected
@@ -107,14 +108,14 @@ const InfoView = () => {
 
               <TableItem
                 title="E-Mail"
-                subtitle={data.email}
+                subtitle={contact?.email}
                 left={<Typography textStyle="h1">E</Typography>}
                 right={<Icon name="envelope" />}
               />
 
               <TableItem
                 title="organization"
-                subtitle={data.organization}
+                subtitle={contact?.organization}
                 left={<Typography textStyle="h1">O</Typography>}
                 right={<Icon name="staff" />}
               />
