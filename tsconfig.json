@@ -26,6 +26,8 @@
     "paths": {
       "@assets": ["assets"],
       "@assets/*": ["assets/*"],
+      "@data": ["data"],
+      "@data/*": ["data/*"],
       "@layouts": ["layouts"],
       "@layouts/*": ["layouts/*"],
       "@components": ["components"],
