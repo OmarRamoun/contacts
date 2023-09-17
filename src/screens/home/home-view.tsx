@@ -1,33 +1,31 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
+
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 import {
+  Avatar,
+  Button,
+  EmptyState,
+  ExpandableItem,
   Flex,
   Form,
+  Icon,
+  InputContainer,
   InputFormik,
   InputText,
-  InputContainer,
-  Typography,
-  Icon,
   Line,
-  SectionList,
   MenuCollapse,
-  TouchableOpacity,
   Pressable,
-  Avatar,
-  ExpandableItem,
+  SectionList,
+  Spinner,
+  TouchableOpacity,
+  Typography,
 } from '@components';
 import {useFormik} from '@lib';
+import type {RootState} from '@state/store';
 import {theme} from '@styles';
-
-interface ContactItem {
-  id: number;
-  avatar: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  organization: string;
-}
+import type {ContactItem, GroupedContacts, ViewNavigationProps} from '@types';
 
 interface ContactProps {
   currentExpanded: ContactItem['id'];
@@ -36,98 +34,32 @@ interface ContactProps {
   index: number;
 }
 
-const DATA = [
-  {
-    title: 'A',
-    data: [
-      {
-        id: 1,
-        avatar: 'https://placekitten.com/200/200',
-        firstName: 'ahmd',
-        lastName: 'good',
-        phone: '+201093333333',
-        email: 'ahmd@org.com',
-        organization: 'org',
-      },
-      {
-        id: 2,
-        avatar: 'https://placekitten.com/200/200',
-        firstName: 'aska',
-        lastName: 'good',
-        phone: '+201093333333',
-        email: 'aska@ramoun.com',
-        organization: 'askas',
-      },
-      {
-        id: 22,
-        avatar: 'https://placekitten.com/200/200',
-        firstName: 'asked',
-        lastName: 'good',
-        phone: '+201093333333',
-        email: 'aska@ramoun.com',
-        organization: 'askas',
-      },
-    ],
-  },
-  {
-    title: 'O',
-    data: [
-      {
-        id: 3,
-        avatar: 'https://placekitten.com/200/200',
-        firstName: 'Omar',
-        lastName: 'Ramoun',
-        phone: '+201093333333',
-        email: 'omar@ramoun.com',
-        organization: 'soso',
-      },
-      {
-        id: 4,
-        avatar: 'https://placekitten.com/200/200',
-        firstName: 'Omai',
-        lastName: 'Ramoun',
-        phone: '+201093333333',
-        email: 'omai@ramoun.com',
-        organization: 'soso',
-      },
-      {
-        id: 44,
-        avatar: 'https://placekitten.com/200/200',
-        firstName: 'Over',
-        lastName: 'Ramoun',
-        phone: '+201093333333',
-        email: 'omai@ramoun.com',
-        organization: 'soso',
-      },
-    ],
-  },
-  {
-    title: 'M',
-    data: [
-      {
-        id: 9,
-        avatar: 'https://placekitten.com/200/200',
-        firstName: 'Mmar',
-        lastName: 'Ramoun',
-        phone: '+201093333333',
-        email: 'omar@ramoun.com',
-        organization: 'soso',
-      },
-      {
-        id: 10,
-        avatar: 'https://placekitten.com/200/200',
-        firstName: 'Mmo',
-        lastName: 'Ramoun',
-        phone: '+201093333333',
-        email: 'omai@ramoun.com',
-        organization: 'soso',
-      },
-    ],
-  },
-];
-
 const HomeView = () => {
   const [currentExpanded, setCurrentExpanded] = useState<ContactItem['id']>(-1);
+  const contacts = useSelector((state: RootState) => state.contacts.value);
+
+  const contactsSortedArray: GroupedContacts[] = useMemo(
+    () =>
+      Object.values(contacts)
+        .reduce((acc: GroupedContacts[], contact: ContactItem) => {
+          const initial = contact.firstName.charAt(0).toLowerCase();
+          const existingGroup = acc.find((item) => item.title === initial);
+
+          if (existingGroup) {
+            existingGroup.data.push(contact);
+          } else {
+            acc.push({title: initial, data: [contact]});
+          }
+
+          return acc;
+        }, [])
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .map((group) => ({
+          title: group.title,
+          data: group.data.sort((a, b) => a.firstName.localeCompare(b.firstName)),
+        })),
+    [contacts],
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -135,6 +67,24 @@ const HomeView = () => {
     },
     onSubmit: () => undefined,
   });
+
+  if (!contacts) {
+    return <Spinner />;
+  }
+
+  if (contactsSortedArray.length === 0) {
+    <EmptyState
+      text="No Contacts Found"
+      bottom={
+        <Flex>
+          <Button onPress={() => undefined}>
+            <Icon name="plus" />
+            Add New Contact
+          </Button>
+        </Flex>
+      }
+    />;
+  }
 
   return (
     <Flex flex={1} m={2}>
@@ -203,7 +153,7 @@ const HomeView = () => {
       <Flex m={2} mt={0} flex={1}>
         <SectionList
           keyExtractor={(contact, index) => `contact-${contact.id}-${index}`}
-          sections={DATA}
+          sections={contactsSortedArray}
           renderItem={({item: contact, index}) => (
             <Contact
               currentExpanded={currentExpanded}
@@ -231,38 +181,58 @@ const HomeView = () => {
   );
 };
 
-const Contact = ({currentExpanded, setCurrentExpanded, contact, index}: ContactProps) => (
-  <ExpandableItem
-    expanded={currentExpanded === contact.id}
-    showTopBorder={index !== 0}
-    onPress={() => {
-      setCurrentExpanded((prevContactId) => (prevContactId === contact.id ? 0 : contact.id));
-    }}
-    leftSlot={
-      <Flex flexDirection="row" alignItems="center" p={2}>
-        <Flex mr={2}>
-          <Avatar image={contact.avatar} />
-        </Flex>
+const Contact = ({currentExpanded, setCurrentExpanded, contact, index}: ContactProps) => {
+  const navigation = useNavigation<ViewNavigationProps<'Home'>>();
 
-        <Flex>
-          <Typography>{`${contact?.firstName} ${contact?.lastName}`}</Typography>
+  return (
+    <ExpandableItem
+      expanded={currentExpanded === contact.id}
+      showTopBorder={index !== 0}
+      onPress={() => {
+        setCurrentExpanded((prevContactId) => (prevContactId === contact.id ? 0 : contact.id));
+      }}
+      leftSlot={
+        <Flex flexDirection="row" alignItems="center" p={2}>
+          <Flex mr={2}>
+            <Avatar image={contact.avatar} />
+          </Flex>
+
+          <Flex>
+            <Typography>{`${contact?.firstName} ${contact?.lastName}`}</Typography>
+          </Flex>
         </Flex>
+      }>
+      <Flex flexDirection="row" alignItems="center" justifyContent="space-evenly">
+        <Pressable
+          p={4}
+          borderRadius={8}
+          onPressStyles={{backgroundColor: theme.colors.grey}}
+          onPress={() => undefined}>
+          <Icon name="phone" />
+        </Pressable>
+
+        <Pressable
+          p={4}
+          borderRadius={8}
+          onPressStyles={{backgroundColor: theme.colors.grey}}
+          onPress={() => undefined}>
+          <Icon name="envelope" />
+        </Pressable>
+
+        <Pressable
+          p={4}
+          borderRadius={8}
+          onPressStyles={{backgroundColor: theme.colors.grey}}
+          onPress={() =>
+            navigation.navigate('Info', {
+              id: contact.id,
+            })
+          }>
+          <Icon name="info-outline" />
+        </Pressable>
       </Flex>
-    }>
-    <Flex flexDirection="row" alignItems="center" justifyContent="space-evenly">
-      <Pressable p={4} borderRadius={8} onPressStyles={{backgroundColor: theme.colors.grey}} onPress={() => undefined}>
-        <Icon name="phone" />
-      </Pressable>
-
-      <Pressable p={4} borderRadius={8} onPressStyles={{backgroundColor: theme.colors.grey}} onPress={() => undefined}>
-        <Icon name="envelope" />
-      </Pressable>
-
-      <Pressable p={4} borderRadius={8} onPressStyles={{backgroundColor: theme.colors.grey}} onPress={() => undefined}>
-        <Icon name="info-outline" />
-      </Pressable>
-    </Flex>
-  </ExpandableItem>
-);
+    </ExpandableItem>
+  );
+};
 
 export {HomeView};
