@@ -88,7 +88,6 @@ const InputText = ({
         {
           textAlignVertical: Platform.OS === 'android' && numberOfLines && numberOfLines > 1 ? 'top' : undefined,
           height: numberOfLines && numberOfLines > 1 ? mainTheme.sizes.inputHeight * numberOfLines : 'auto',
-          /* width: '100%', */
         },
         style,
       ]}
