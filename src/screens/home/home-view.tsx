@@ -1,9 +1,20 @@
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 import {BackHandler} from 'react-native';
 
 import {useDispatch} from 'react-redux';
 
-import {Icon, InputContainer, InputText, Line, Flex, MenuCollapse, TouchableOpacity} from '@components';
+import {
+  Box,
+  Button,
+  EmptyState,
+  Flex,
+  Icon,
+  InputContainer,
+  InputText,
+  Line,
+  MenuCollapse,
+  TouchableOpacity,
+} from '@components';
 import {clearContacts} from '@state/slices';
 import {theme} from '@styles';
 import type {ViewNavigationProps} from '@types';
@@ -17,9 +28,26 @@ interface HomeViewProps {
 }
 
 const HomeView = ({navigation}: HomeViewProps) => {
-  const {search, handleSearch} = useHomeContext();
+  const [search, setSearch] = useState<string>('');
+
+  const {contactsSortedArray} = useHomeContext();
 
   const dispatch = useDispatch();
+
+  const filterContacts = (searchTerm: string) => {
+    if (searchTerm.length === 0) {
+      return contactsSortedArray;
+    }
+
+    const filteredContacts = contactsSortedArray.map((group) => ({
+      ...group,
+      data: group.data.filter((contact) => contact.firstName.toLowerCase().includes(searchTerm.toLowerCase())),
+    }));
+
+    return filteredContacts.filter((group) => group.data.length > 0);
+  };
+
+  const filteredContacts = useMemo(() => filterContacts(search), [search, contactsSortedArray]);
 
   return (
     <Flex flex={1} m={2}>
@@ -33,7 +61,7 @@ const HomeView = ({navigation}: HomeViewProps) => {
         leftSlot={() => (
           <Flex ml={2}>
             {search.length > 0 ? (
-              <TouchableOpacity onPress={() => handleSearch('')}>
+              <TouchableOpacity onPress={() => setSearch('')}>
                 <Icon name="cross" size="md" />
               </TouchableOpacity>
             ) : (
@@ -77,7 +105,7 @@ const HomeView = ({navigation}: HomeViewProps) => {
             autoCorrect={false}
             autoCapitalize="none"
             value={search}
-            onChangeText={(text) => handleSearch(text)}
+            onChangeText={(text) => setSearch(text)}
             setFocused={setFocused}
             style={{flex: 1, paddingRight: 7, paddingLeft: 3}}
             maxLength={40}
@@ -88,7 +116,23 @@ const HomeView = ({navigation}: HomeViewProps) => {
       <Line mt={4} size="xsm" />
 
       <Flex m={2} my={0} flex={1}>
-        <ContactsList />
+        {filteredContacts?.length > 0 ? (
+          <ContactsList contacts={filteredContacts} />
+        ) : (
+          <Box p="4">
+            <EmptyState
+              text="No Contacts Found"
+              bottom={
+                <Flex>
+                  <Button depth={4} onPress={() => navigation?.navigate('Form', {type: 'add'})}>
+                    <Icon name="plus" color="white" />
+                    Add New Contact
+                  </Button>
+                </Flex>
+              }
+            />
+          </Box>
+        )}
       </Flex>
 
       <RoundButton
