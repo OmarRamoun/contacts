@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 import type {iconMap} from '@assets';
 import type {theme} from '@styles';
-import {ensureArray} from '@utils';
+import {ensureArray} from '@utils/general';
 
 import {ActionSheet} from '../action-sheet/action-sheet';
 import {Flex} from '../flex';

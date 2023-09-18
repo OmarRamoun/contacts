@@ -1,12 +1,22 @@
 import type {RouteProp} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
+import type {ContactItem} from './contact';
+
 type RootStackParamList = {
   Home: undefined;
   Info: {
-    id: number;
+    id: ContactItem['id'];
   };
-  Form: undefined;
+  Form:
+    | {
+        type: 'add';
+      }
+    | {
+        type: 'edit';
+        id: ContactItem['id'];
+      };
+  Settings: undefined;
 };
 
 type ViewNavigationProps<T extends keyof RootStackParamList> = NativeStackNavigationProp<RootStackParamList, T>;

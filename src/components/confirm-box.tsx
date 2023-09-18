@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Button} from './button/button';
 import {Flex} from './flex';
+import {Table} from './table/table';
 import {TableFooter} from './table/table-footer';
 import {TableHeader} from './table/table-header';
 import {Typography} from './typography';
@@ -14,7 +15,7 @@ interface ConfirmBoxProps {
 }
 
 const ConfirmBox = ({onOk, onCancel, headerTitle, bodyTitle}: ConfirmBoxProps) => (
-  <>
+  <Table>
     <TableHeader
       left={
         <TableHeader.LeftAccessory>
@@ -26,7 +27,7 @@ const ConfirmBox = ({onOk, onCancel, headerTitle, bodyTitle}: ConfirmBoxProps) =
       actionIcon="plus"
     />
 
-    <Flex backgroundColor="white" px={4} py={4}>
+    <Flex backgroundColor="white" px={4} py={4} minWidth={50}>
       <Flex mb={4}>
         <Typography textStyle="small" color="black">
           {bodyTitle || 'All information will be lost.'}
@@ -43,7 +44,7 @@ const ConfirmBox = ({onOk, onCancel, headerTitle, bodyTitle}: ConfirmBoxProps) =
         Cancel
       </Button>
     </TableFooter>
-  </>
+  </Table>
 );
 
 export {ConfirmBox};

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useField} from '@lib';
-import {ensureArray} from '@utils';
+import {ensureArray} from '@utils/general';
 
 import type {InputSelectProps} from './input-select';
 import {InputSelect} from './input-select';

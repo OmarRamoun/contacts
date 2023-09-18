@@ -42,6 +42,8 @@
       "@interfaces/*": ["interfaces/*"],
       "@styles": ["styles"],
       "@styles/*": ["styles/*"],
+      "@stacks": ["stacks"],
+      "@stacks/*": ["stacks/*"],
       "@lib": ["lib"],
       "@lib/*": ["lib/*"],
       "@state": ["state"],
@@ -56,8 +58,8 @@
     "useDefineForClassFields": true,
     "noImplicitAny": true,
     "typeRoots": ["../../@types", "node_modules/@types", "tsconfig.json"],
-    "types": ["node", "./src/types/styled-components", "styled-components-react-native"]
+    "types": ["node", "src/types/definations/styled-components.d.ts", "styled-components-react-native"]
   },
-  "include": ["src", "types.d.ts", "src/types", "src/assets"],
+  "include": ["src", "src/types/definations/styled-components.d.ts"],
   "exclude": ["node_modules", "test/*", "babel.config.js", "metro.config.js"]
 }

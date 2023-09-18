@@ -27,6 +27,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "@reduxjs/toolkit": "^1.8.0",
@@ -34,14 +35,16 @@
     "metro-config": "^0.79.0",
     "react": "18.2.0",
     "react-native": "0.72.4",
+    "react-native-get-random-values": "^1.9.0",
     "react-native-safe-area-context": "^4.7.2",
     "react-native-screens": "^3.25.0",
     "react-native-svg": "^11.0.1",
     "react-redux": "^7.2.6",
     "react-router": "^6.15.0",
+    "redux-persist": "^6.0.0",
     "styled-components": "^5.3.6",
     "styled-system": "^5.1.5",
-    "uuid": "^9.0.0",
+    "uuid": "^9.0.1",
     "yup": "^1.2.0"
   },
   "devDependencies": {
@@ -66,6 +69,7 @@
     "@types/node": "20.5.6",
     "@types/react": "^18.0.24",
     "@types/react-native": "^0.72.2",
+    "@types/react-native-get-random-values": "^1.8.0",
     "@types/react-test-renderer": "^18.0.0",
     "@types/styled-components": "^5.1.0",
     "@types/styled-components-react-native": "^5.2.1",
@@ -111,22 +115,6 @@
     "**/@types/yup": "0.29.8",
     "styled-components": "^5",
     "**/eslint": "7.11.0"
-  },
-  "jest": {
-    "verbose": true,
-    "testMatch": [
-      "<rootDir>/__tests__/**/*.(spec|test).ts?(x)"
-    ],
-    "preset": "react-native-web",
-    "setupFiles": [
-      "<rootDir>/__tests__/setup.ts"
-    ],
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|@react-native)"
-    ]
   },
   "husky": {
     "hooks": {

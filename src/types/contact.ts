@@ -1,5 +1,5 @@
 interface ContactItem {
-  id: number;
+  id: string;
   avatar: string;
   firstName: string;
   lastName: string;

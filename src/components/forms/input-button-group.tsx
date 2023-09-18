@@ -1,6 +1,6 @@
 import React, {useCallback, useState, useEffect} from 'react';
 
-import {ensureArray} from '@utils';
+import {ensureArray} from '@utils/general';
 
 import {ButtonInteraction} from '../button/button-interaction';
 import {Flex} from '../flex';

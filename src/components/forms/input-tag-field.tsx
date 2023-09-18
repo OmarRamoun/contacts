@@ -5,12 +5,12 @@ import {ScrollView} from 'react-native';
 import styled from 'styled-components/native';
 
 import {theme as mainTheme} from '@styles';
+import {awaitFrame} from '@utils/general';
 
 import {Flex} from '../flex';
 import {Spinner} from '../spinner/spinner';
 import type {TagObject} from '../tag';
 import {Tag} from '../tag';
-import {awaitFrame} from '../utils';
 
 import type {InputSharedProps, InputSharedSlotProps, InputTagFieldSearchProps, TagFieldValue} from './input-shared';
 import {InputTagFieldSearch} from './input-tag-field-search';

@@ -32,6 +32,7 @@ module.exports = {
           '@types': './src/types',
           '@layouts': './src/layouts',
           '@state': './src/state',
+          '@stacks': './src/stacks',
           '@pages': './src/pages',
           '@shared': './src/shared',
           '@styles': './src/styles',

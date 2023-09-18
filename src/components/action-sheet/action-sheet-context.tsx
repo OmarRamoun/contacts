@@ -1,6 +1,6 @@
 import React, {createContext, useState, useMemo} from 'react';
 
-import {utils} from '../utils';
+import {utils} from '@utils/general';
 
 interface ActionSheetObjects {
   id: number;

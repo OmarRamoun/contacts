@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {awaitFrame} from '../utils';
+import {awaitFrame} from '@utils/general';
 
 import {useGenericTransition} from './transition-hook';
 import type {TransitionContainerProps} from './transition-shared';

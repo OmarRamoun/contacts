@@ -164,7 +164,7 @@ const zIndex = {
   modal: 20,
   modalTop: 25,
   actionSheet: 30,
-  toast: 40,
+  toast: 100,
 };
 
 const commonTextStyle = {

@@ -1,5 +1,3 @@
-const ALPHA_UPPER = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+const CONTACTS_KEY = 'SAVED_CONTACTS';
 
-const ALPHA_LOWER = [...'abcdefghijklmnopqrstuvwxyz'];
-
-export {ALPHA_UPPER, ALPHA_LOWER};
+export {CONTACTS_KEY};

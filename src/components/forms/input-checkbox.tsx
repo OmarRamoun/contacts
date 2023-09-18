@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, {useCallback, useEffect, useState} from 'react';
 
 import styled from 'styled-components/native';

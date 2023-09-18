@@ -4,7 +4,8 @@ import {Platform} from 'react-native';
 import styled from 'styled-components/native';
 
 import {theme} from '@styles';
-import {getInitialsString} from '@utils';
+import {openURL} from '@utils/linking-utils';
+import {getInitialsString} from '@utils/strings';
 
 import {Avatar} from '../avatar/avatar';
 import {Box} from '../box';
@@ -13,10 +14,9 @@ import {Flex} from '../flex';
 import {InfoText} from '../info-text';
 import {Pressable} from '../pressable';
 import {Typography} from '../typography';
-import {openURL} from '../utils';
 
 export interface AvatarDataTypes {
-  nurseryName: string;
+  organizationName: string;
   firstName: string | undefined;
   lastName: string | undefined;
   avatarUrl: string | undefined;
@@ -24,13 +24,16 @@ export interface AvatarDataTypes {
     text: string;
     to?: string;
     onPress?: () => void;
+    soon?: boolean;
   }[];
   isAdmin: boolean;
-  lastOptionHandler: () => void;
+  lastOptionHandler?: () => void;
+  lastOptionText?: string;
 }
 
 interface SidebarProps extends FlexProps {
   avatarData: AvatarDataTypes;
+  toggleMenu: () => void;
 }
 
 const StyledSidebar = styled(Box)`
@@ -43,7 +46,7 @@ const StyledSidebar = styled(Box)`
   box-shadow: 2px 2px 8px ${theme.colors.boxShadow};
 `;
 
-const MenuAvatarSidebar = ({avatarData}: SidebarProps) => (
+const MenuAvatarSidebar = ({avatarData, toggleMenu}: SidebarProps) => (
   <StyledSidebar>
     <Flex mx={2} mb={4} flexDirection="row" alignItems="center" justify-content="space-between">
       <Flex mr={2}>
@@ -75,7 +78,7 @@ const MenuAvatarSidebar = ({avatarData}: SidebarProps) => (
 
         <Flex>
           <Typography textStyle="h3" color="darkBlue" numberOfLines={1}>
-            {avatarData.nurseryName}
+            {avatarData.organizationName}
           </Typography>
         </Flex>
       </Flex>
@@ -83,32 +86,46 @@ const MenuAvatarSidebar = ({avatarData}: SidebarProps) => (
 
     <Flex flex={4} flexDirection="column">
       <Flex flexDirection="column">
-        <Box mb={2} bg="transparent" flexDirection="row" justifyContent="space-between" p={2} pb={0}>
-          <Typography textStyle="small" color="grey">
-            Switch Account
-          </Typography>
-
-          <Box p="2px" px={1} bg="lightGrey1" borderRadius="md">
-            <Typography textStyle="extraSmall" color="darkBlueOpacityHalf">
-              Coming Soon
-            </Typography>
-          </Box>
-        </Box>
-
         {avatarData.menuItemsData.map((item, idx) => (
-          <Pressable key={`sidebar-menu-item-${idx}`} to={item.to} onPress={item.onPress} mb={0}>
-            {item.text}
+          <Pressable
+            key={`sidebar-menu-item-${idx}`}
+            to={item.to}
+            onPress={
+              !item.soon
+                ? () => {
+                    item?.onPress?.();
+                    toggleMenu();
+                    // eslint-disable-next-line
+                  }
+                : undefined
+            }
+            mb={0}>
+            <Box bg="transparent" flexDirection="row" justifyContent="space-between" pb={0}>
+              <Typography textStyle="small" color={item.soon ? 'grey' : 'darkBlue'}>
+                {item.text}
+              </Typography>
+
+              {item.soon ? (
+                <Box p="2px" px={1} bg="lightGrey1" borderRadius="md">
+                  <Typography textStyle="extraSmall" color="darkBlueOpacityHalf">
+                    Coming Soon
+                  </Typography>
+                </Box>
+              ) : null}
+            </Box>
           </Pressable>
         ))}
       </Flex>
     </Flex>
 
     <Flex>
-      <Pressable onPress={avatarData.lastOptionHandler} onPressStyles={{backgroundColor: theme.colors.pink2}}>
-        <Typography textStyle="body" color="red">
-          Log Out
-        </Typography>
-      </Pressable>
+      {avatarData.lastOptionText ? (
+        <Pressable onPress={avatarData.lastOptionHandler} onPressStyles={{backgroundColor: theme.colors.pink2}}>
+          <Typography textStyle="body" color="red">
+            {avatarData.lastOptionText}
+          </Typography>
+        </Pressable>
+      ) : null}
 
       <Flex mx={2} flexDirection="row" alignItems="center">
         <InfoText text="&copy; Built By " />

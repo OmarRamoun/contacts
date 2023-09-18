@@ -2,10 +2,10 @@ import type {PayloadAction} from '@reduxjs/toolkit';
 import {createSlice} from '@reduxjs/toolkit';
 
 import storage from '@data/contacts';
-import type {ContactItem} from '@types';
+import type {Contacts, ContactItem} from '@types';
 /* import {getItem, setItem} from '@utils/storage'; */
 
-const initialValue: ContactItem[] = [];
+const initialValue: Contacts = {};
 
 /* const contactsData = getItem('contacts'); */
 /* const storage: ContactItem[] = contactsData ? JSON.parse(contactsData) : null; */
@@ -18,19 +18,23 @@ const contactsSlice = createSlice({
   },
   reducers: {
     addContact: (state, action: PayloadAction<ContactItem>) => {
+      const newContact = action.payload;
       // eslint-disable-next-line
-      state.value = [...state.value, action.payload];
-      /* setStorage(state.value); */
+      state.value[newContact.id] = newContact;
+    },
+    editContact: (state, action: PayloadAction<ContactItem>) => {
+      const editedContact = action.payload;
+      // eslint-disable-next-line
+      state.value[editedContact.id] = editedContact;
     },
     clearContacts: (state) => {
       // eslint-disable-next-line
-      state.value = [];
-      /* setStorage(state.value); */
+      state.value = {};
     },
   },
 });
 
-const {addContact, clearContacts} = contactsSlice.actions;
-export {contactsSlice, addContact, clearContacts};
+const {addContact, editContact, clearContacts} = contactsSlice.actions;
+export {contactsSlice, addContact, editContact, clearContacts};
 
 export default contactsSlice.reducer;

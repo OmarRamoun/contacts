@@ -2,7 +2,7 @@ import React, {createContext, useContext, useState, useCallback} from 'react';
 
 import type {DefaultTheme} from 'styled-components/native';
 
-import {utils} from '../utils';
+import {utils} from '@utils/general';
 
 export interface ToastObject {
   message: string;

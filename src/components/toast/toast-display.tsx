@@ -37,6 +37,7 @@ const OuterWindowAndroid = styled(Flex)`
   left: 0;
   width: 100%;
   elevation: ${(props) => props.theme.zIndex.toast};
+  z-index: ${(props) => props.theme.zIndex.toast};
 `;
 
 const ToastContainerAndroid = styled(Flex)<{top?: number}>`

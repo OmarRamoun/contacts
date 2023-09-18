@@ -5,7 +5,10 @@ declare module '*.svg' {
   export default content;
 }
 
-declare module 'react-native-video-processing';
+declare module '*.json' {
+  const value: any;
+  export default value;
+}
+
 declare module '*.png';
 declare module '*.jpg';
-

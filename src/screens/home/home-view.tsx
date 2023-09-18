@@ -1,97 +1,25 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
 import {BackHandler} from 'react-native';
 
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
-import {
-  Avatar,
-  Button,
-  EmptyState,
-  ExpandableItem,
-  Flex,
-  Icon,
-  InputContainer,
-  InputText,
-  Line,
-  MenuCollapse,
-  Pressable,
-  SectionList,
-  TouchableOpacity,
-  Typography,
-} from '@components';
+import {Icon, InputContainer, InputText, Line, Flex, MenuCollapse, TouchableOpacity} from '@components';
 import {clearContacts} from '@state/slices';
-import type {RootState} from '@state/store';
 import {theme} from '@styles';
-import type {ContactItem, GroupedContacts, ViewNavigationProps} from '@types';
+import type {ViewNavigationProps} from '@types';
 
-import {contactsBinarySearch} from './utils';
+import {ContactsList} from './components/contacts-list';
+import {RoundButton} from './components/round-button';
+import {useHomeContext} from './home-context';
 
-interface ContactProps {
-  expanded: boolean;
-  showTopBorder: boolean;
-  onPress: () => void;
-  contact: ContactItem;
+interface HomeViewProps {
+  navigation?: ViewNavigationProps<'Home'>;
 }
 
-const HomeView = () => {
-  const [currentExpanded, setCurrentExpanded] = useState<ContactItem['id'] | null>(null);
-  const [search, setSearch] = useState<string>('');
+const HomeView = ({navigation}: HomeViewProps) => {
+  const {search, handleSearch} = useHomeContext();
 
   const dispatch = useDispatch();
-  const contacts = useSelector((state: RootState) => state.contacts.value);
-
-  const contactsSortedArray: GroupedContacts[] = useMemo(
-    () =>
-      Object.values(contacts)
-        .reduce((acc: GroupedContacts[], contact: ContactItem) => {
-          const initial = contact.firstName.charAt(0).toLowerCase();
-          const existingGroup = acc.find((item) => item.title === initial);
-
-          if (existingGroup) {
-            existingGroup.data.push(contact);
-          } else {
-            acc.push({title: initial, data: [contact]});
-          }
-
-          return acc;
-        }, [])
-        .sort((a, b) => a.title.localeCompare(b.title))
-        .map((group) => ({
-          title: group.title,
-          data: group.data.sort((a, b) => a.firstName.localeCompare(b.firstName)),
-        })),
-    [contacts],
-  );
-
-  const filterContacts = (searchTerm: string) => {
-    if (searchTerm.length === 0) {
-      return contactsSortedArray;
-    }
-
-    const filteredContacts = contactsSortedArray.map((group) => ({
-      ...group,
-      data: contactsBinarySearch(group.data, searchTerm),
-    }));
-
-    return filteredContacts.filter((group) => group.data.length > 0);
-  };
-
-  const filteredContacts = filterContacts(search);
-
-  if (contactsSortedArray.length === 0) {
-    <EmptyState
-      text="No Contacts Found"
-      bottom={
-        <Flex>
-          <Button onPress={() => undefined}>
-            <Icon name="plus" />
-            Add New Contact
-          </Button>
-        </Flex>
-      }
-    />;
-  }
 
   return (
     <Flex flex={1} m={2}>
@@ -105,7 +33,7 @@ const HomeView = () => {
         leftSlot={() => (
           <Flex ml={2}>
             {search.length > 0 ? (
-              <TouchableOpacity onPress={() => setSearch('')}>
+              <TouchableOpacity onPress={() => handleSearch('')}>
                 <Icon name="cross" size="md" />
               </TouchableOpacity>
             ) : (
@@ -133,7 +61,7 @@ const HomeView = () => {
                   },
                   {
                     text: 'Settings',
-                    /* onPress: () => navigation.navigate('Settings'), */
+                    onPress: () => navigation?.navigate('Settings'),
                   },
                 ],
                 lastOptionText: 'Exit',
@@ -149,7 +77,7 @@ const HomeView = () => {
             autoCorrect={false}
             autoCapitalize="none"
             value={search}
-            onChangeText={(text) => setSearch(text)}
+            onChangeText={(text) => handleSearch(text)}
             setFocused={setFocused}
             style={{flex: 1, paddingRight: 7, paddingLeft: 3}}
             maxLength={40}
@@ -159,89 +87,21 @@ const HomeView = () => {
 
       <Line mt={4} size="xsm" />
 
-      <Flex m={2} mt={0} flex={1}>
-        <SectionList
-          canPaginate
-          keyExtractor={(contact, index) => `contact-${contact.id}-${index}`}
-          sections={filteredContacts}
-          renderItem={({item: contact, index}) => (
-            <Contact
-              expanded={currentExpanded === contact.id}
-              showTopBorder={index !== 0}
-              onPress={() => {
-                setCurrentExpanded((prevContactId) => (prevContactId === contact.id ? 0 : contact.id));
-              }}
-              contact={contact}
-            />
-          )}
-          renderSectionHeader={({section: {title}}) => (
-            <Flex flexDirection="row" alignItems="center" px={2} py={1} my={2}>
-              <Flex>
-                <Typography textStyle="sectionHeaderBold" color="darkGrey">
-                  {title.toUpperCase()}
-                </Typography>
-              </Flex>
-
-              <Flex ml={2} flex={1}>
-                <Line size="sm" colorOverride="darkGrey" />
-              </Flex>
-            </Flex>
-          )}
-        />
+      <Flex m={2} my={0} flex={1}>
+        <ContactsList />
       </Flex>
+
+      <RoundButton
+        position="absolute"
+        bottom={0}
+        right={0}
+        onPress={() =>
+          navigation?.navigate('Form', {
+            type: 'add',
+          })
+        }
+      />
     </Flex>
-  );
-};
-
-const Contact = ({expanded, showTopBorder, onPress, contact}: ContactProps) => {
-  const navigation = useNavigation<ViewNavigationProps<'Home'>>();
-
-  return (
-    <ExpandableItem
-      expanded={expanded}
-      showTopBorder={showTopBorder}
-      onPress={onPress}
-      leftSlot={
-        <Flex flexDirection="row" alignItems="center" p={2}>
-          <Flex mr={2}>
-            <Avatar image={contact.avatar} />
-          </Flex>
-
-          <Flex>
-            <Typography>{`${contact?.firstName} ${contact?.lastName}`}</Typography>
-          </Flex>
-        </Flex>
-      }>
-      <Flex flexDirection="row" alignItems="center" justifyContent="space-evenly">
-        <Pressable
-          p={4}
-          borderRadius={8}
-          onPressStyles={{backgroundColor: theme.colors.grey}}
-          onPress={() => undefined}>
-          <Icon name="phone" />
-        </Pressable>
-
-        <Pressable
-          p={4}
-          borderRadius={8}
-          onPressStyles={{backgroundColor: theme.colors.grey}}
-          onPress={() => undefined}>
-          <Icon name="envelope" />
-        </Pressable>
-
-        <Pressable
-          p={4}
-          borderRadius={8}
-          onPressStyles={{backgroundColor: theme.colors.grey}}
-          onPress={() =>
-            navigation.navigate('Info', {
-              id: contact.id,
-            })
-          }>
-          <Icon name="info-outline" />
-        </Pressable>
-      </Flex>
-    </ExpandableItem>
   );
 };
 

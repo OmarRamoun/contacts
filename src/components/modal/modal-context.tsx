@@ -2,7 +2,7 @@ import React, {createContext, useContext, useState, useCallback} from 'react';
 
 import type {DefaultTheme} from 'styled-components';
 
-import {utils} from '../utils';
+import {utils} from '@utils/general';
 
 export interface ModalObjects {
   id: number;

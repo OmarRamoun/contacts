@@ -17,17 +17,17 @@ interface MenuCollapseProps {
 }
 
 const MenuCollapse = ({avatarData}: MenuCollapseProps) => {
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
-  const toggleSidebar = () => setShowSidebar(!showSidebar);
+  const toggleMenu = () => setShowMenu(!showMenu);
 
   return (
     <KeyboardAvoidingView contentContainerStyle={{display: 'flex', justifyContent: 'center'}}>
       <Flex>
         {avatarData && (
           <ActionSheet
-            visible={showSidebar}
-            onClose={toggleSidebar}
+            visible={showMenu}
+            onClose={toggleMenu}
             sheetWidth={Platform.OS === 'web' ? 280 : 230}
             overridePadding={{p: 0}}
             overrideMargin={{mx: 2, my: 3}}
@@ -35,8 +35,8 @@ const MenuCollapse = ({avatarData}: MenuCollapseProps) => {
             overrideBackdropColor={theme.colors.highlighted}
             position={ActionSheetPosition.Right}
             side={ActionSheetPosition.Center}
-            customContent={<MenuAvatarSidebar avatarData={avatarData} />}>
-            <TouchableWithoutFeedback onPress={toggleSidebar}>
+            customContent={<MenuAvatarSidebar avatarData={avatarData} toggleMenu={toggleMenu} />}>
+            <TouchableWithoutFeedback onPress={toggleMenu}>
               <Avatar image={avatarData.avatarUrl} size="sm" borderColor={theme.primaryColor.default} />
             </TouchableWithoutFeedback>
           </ActionSheet>
