@@ -6,8 +6,10 @@ import {View} from 'react-native';
 import type {FlashListProps} from '@shopify/flash-list';
 import {FlashList} from '@shopify/flash-list';
 
+import {Flex} from '../flex';
+import {Typography} from '../typography';
+
 import type {ListProps} from './list-shared';
-import {ListFooterComponent, getContainerStyle} from './list-shared';
 
 interface SectionListProps
   extends Omit<FlashListProps<any>, 'contentContainerStyle' | 'data' | 'renderItem'>,
@@ -34,10 +36,9 @@ const convertToFlatListFormat = (items: SectionListProps['sections']) => {
 
 const SectionList = ({
   sections,
-  shouldCenterOnEmpty = true,
+  /* shouldCenterOnEmpty = true, */
   contentContainerStyle = {},
   renderElement,
-  canPaginate = false,
   keyField = 'id',
   renderSectionHeader,
   ...props
@@ -70,9 +71,13 @@ const SectionList = ({
         }}
         stickyHeaderIndices={stickyHeaderIndices}
         getItemType={(item) => (typeof item === 'string' ? 'sectionHeader' : 'row')}
-        contentContainerStyle={getContainerStyle(sections, contentContainerStyle, shouldCenterOnEmpty)}
+        contentContainerStyle={{...contentContainerStyle}}
         keyExtractor={(item) => `${item[keyField]}`}
-        ListFooterComponent={() => <ListFooterComponent canPaginate={canPaginate} />}
+        ListFooterComponent={() => (
+          <Flex flex={1} alignItems="center" justifyContent="center">
+            <Typography color="grey">End of List</Typography>
+          </Flex>
+        )}
         {...props}
       />
     </View>

@@ -1,11 +1,11 @@
 // TODO: Implement using the new Pressable component from https://reactnative.dev/docs/pressable
 
 import React from 'react';
+import {Pressable as RNP} from 'react-native';
 import type {ViewStyle} from 'react-native';
 
 import {Box} from './box';
 import type {BoxProps} from './box';
-import {ButtonInteraction} from './button/button-interaction';
 import {Typography} from './typography';
 
 interface PressableProps extends BoxProps {
@@ -15,9 +15,9 @@ interface PressableProps extends BoxProps {
   onPressStyles?: ViewStyle;
 }
 
-const Pressable = ({onPress, to, children, onPressStyles, ...props}: PressableProps) => (
-  <ButtonInteraction onPress={onPress} to={to}>
-    {({mouseProps, pressed, ...interactionProps}) => (
+const Pressable = ({onPress, children, onPressStyles, ...props}: PressableProps) => (
+  <RNP onPress={onPress}>
+    {({pressed}) => (
       <Box
         bg={pressed ? 'transBlack' : 'transparent'}
         borderRadius="md"
@@ -25,9 +25,7 @@ const Pressable = ({onPress, to, children, onPressStyles, ...props}: PressablePr
         p={2}
         mb={2}
         style={pressed ? onPressStyles : {}}
-        {...props}
-        {...mouseProps}
-        {...interactionProps}>
+        {...props}>
         {typeof children === 'string' ? (
           <Typography textStyle="small" color="darkBlue">
             {children}
@@ -37,7 +35,7 @@ const Pressable = ({onPress, to, children, onPressStyles, ...props}: PressablePr
         )}
       </Box>
     )}
-  </ButtonInteraction>
+  </RNP>
 );
 
 export {Pressable};
