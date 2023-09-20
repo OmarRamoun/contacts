@@ -23,7 +23,7 @@
     "tsprune": "yarn ts-prune -e -i '(assets|server|public|src/index.ts|components/src/index.ts)'",
     "tsprune:all": "yarn ts-prune -e -i",
     "pre-commit": "lint-staged",
-    "pre-push": "git diff --quiet HEAD origin/main -- src || yarn bundle",
+    "pre-push": "git diff --quiet HEAD origin/main -- src || yarn android",
     "prepare": "husky install"
   },
   "dependencies": {
