@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ScrollView} from 'react-native';
 
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {
   Flex,
@@ -16,13 +16,16 @@ import {
   TouchableOpacity,
   Avatar,
   Pressable,
-  ConfirmBox,
-  StandardModal,
-  Spinner,
+  Button,
+  EmptyState,
+  useToastContext,
 } from '@components';
+import {ANDROID, CONTACTS_WRITE_PERM_DETAILS} from '@constants/permissions';
+import {deleteContact} from '@state/slices';
 import type {RootState} from '@state/store';
 import {theme} from '@styles';
 import type {ViewNavigationProps, RouteNavigationProps, ContactItem} from '@types';
+import {getPermissions} from '@utils/permissions';
 
 interface InfoViewProps {
   navigation?: ViewNavigationProps<'Info'>;
@@ -30,16 +33,63 @@ interface InfoViewProps {
 }
 
 const InfoView = ({navigation, route}: InfoViewProps) => {
-  const [confirmDelete, setConfirmDelete] = useState(false);
-
   const {id: contactId}: {id?: ContactItem['id']} = route?.params ?? {};
+
+  const {showOneToast, showErrorToast} = useToastContext();
 
   const contacts = useSelector((state: RootState) => state.contacts.value);
 
+  const dispatch = useDispatch();
+
   const contact = contactId !== undefined ? contacts[contactId] : undefined;
 
+  const handleDelete = async () => {
+    if (contact?.id) {
+      try {
+        await getPermissions(
+          ANDROID.contactsWrite,
+          () => dispatch(deleteContact(contact?.id)),
+          CONTACTS_WRITE_PERM_DETAILS,
+        );
+
+        showOneToast({message: 'Contact Was Deleted Successfully', backgroundColor: 'green'});
+        navigation?.goBack();
+      } catch (error) {
+        showErrorToast({message: 'Failed To Delete Contact. Check App Permissions'});
+      }
+    }
+  };
+
+  const handleStarred = async () => {
+    if (contact?.id) {
+      try {
+        // TODO: Fix Starring Mehanism
+        /* await getPermissions(
+         * ANDROID.contactsWrite, () => dispatch(starContact(contact)), CONTACTS_WRITE_PERM_DETAILS
+         * ); */
+        showOneToast({message: 'This feature is comming soon...', backgroundColor: 'blue'});
+      } catch (error) {
+        showErrorToast({message: 'Could Not Add To Favorite. Check App Permissions'});
+      }
+    }
+  };
+
   if (!contact) {
-    return <Spinner />;
+    return (
+      <Flex>
+        <EmptyState
+          text="This Contact is Not Found"
+          bottom={
+            <Flex flex={1} alignItems="center" justifyContent="center">
+              <Button depth={4} onPress={() => navigation?.navigate('Form', {type: 'add'})}>
+                <Icon name="plus" color="white" />
+                Add New Contact
+              </Button>
+            </Flex>
+          }
+        />
+      </Flex>
+    );
   }
 
   return (
@@ -61,7 +111,19 @@ const InfoView = ({navigation, route}: InfoViewProps) => {
             }
             right={
               <TableHeader.RightAccessory>
-                <TouchableOpacity onPress={() => navigation?.navigate('Form')}>
+                <TouchableOpacity onPress={handleStarred}>
+                  <Box p={2} mr={2} borderRadius={8}>
+                    <Icon name="star" color={contact.isStarred ? 'black' : 'grey'} size="md" />
+                  </Box>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation?.navigate('Form', {
+                      type: 'edit',
+                      id: contact?.id,
+                    })
+                  }>
                   <Box bg="grey" p={2} borderRadius={8}>
                     <Icon name="edit-pencil" size="md" />
                   </Box>
@@ -112,13 +174,6 @@ const InfoView = ({navigation, route}: InfoViewProps) => {
                 left={<Typography textStyle="h1">E</Typography>}
                 right={<Icon name="envelope" />}
               />
-
-              <TableItem
-                title="organization"
-                subtitle={contact?.organization}
-                left={<Typography textStyle="h1">O</Typography>}
-                right={<Icon name="staff" />}
-              />
             </ScrollView>
           </TableBody>
 
@@ -131,7 +186,7 @@ const InfoView = ({navigation, route}: InfoViewProps) => {
               alignItems="center"
               justifyContent="flex-start"
               onPressStyles={{backgroundColor: theme.colors.lightPink}}
-              onPress={() => setConfirmDelete(true)}>
+              onPress={handleDelete}>
               <Flex mr={1}>
                 <Icon color="white" name="delete-two" />
               </Flex>
@@ -140,10 +195,6 @@ const InfoView = ({navigation, route}: InfoViewProps) => {
           </TableFooter>
         </Table>
       </Flex>
-
-      <StandardModal show={confirmDelete}>
-        <ConfirmBox onOk={() => setConfirmDelete(false)} onCancel={() => setConfirmDelete(false)} />
-      </StandardModal>
     </>
   );
 };
