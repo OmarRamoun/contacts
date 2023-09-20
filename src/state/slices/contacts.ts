@@ -1,40 +1,47 @@
+/* eslint-disable no-param-reassign */
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {createSlice} from '@reduxjs/toolkit';
 
-import storage from '@data/contacts';
 import type {Contacts, ContactItem} from '@types';
-/* import {getItem, setItem} from '@utils/storage'; */
+
+import {mapToPhoneContact, addContactToPhone, editPhoneContact, deletePhoneContact, starPhoneContact} from '../helpers';
 
 const initialValue: Contacts = {};
-
-/* const contactsData = getItem('contacts'); */
-/* const storage: ContactItem[] = contactsData ? JSON.parse(contactsData) : null; */
-/* const setStorage = (value: ContactItem[]) => setItem('contacts', JSON.stringify(value)); */
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
-    value: storage || initialValue,
+    value: initialValue,
   },
   reducers: {
+    syncContacts: (state, action: PayloadAction<Contacts>) => {
+      state.value = action.payload;
+    },
     addContact: (state, action: PayloadAction<ContactItem>) => {
       const newContact = action.payload;
-      // eslint-disable-next-line
-      state.value[newContact.id] = newContact;
+      const mappedNewContact = mapToPhoneContact(newContact);
+      addContactToPhone(mappedNewContact, state);
     },
     editContact: (state, action: PayloadAction<ContactItem>) => {
       const editedContact = action.payload;
-      // eslint-disable-next-line
       state.value[editedContact.id] = editedContact;
+      editPhoneContact(editedContact, state);
+    },
+    deleteContact: (state, action: PayloadAction<string>) => {
+      const contactIdToDelete = action.payload;
+      deletePhoneContact(contactIdToDelete, state);
+    },
+    starContact: (state, action: PayloadAction<ContactItem>) => {
+      const editedContact = action.payload;
+      starPhoneContact(editedContact, state);
     },
     clearContacts: (state) => {
-      // eslint-disable-next-line
       state.value = {};
     },
   },
 });
 
-const {addContact, editContact, clearContacts} = contactsSlice.actions;
-export {contactsSlice, addContact, editContact, clearContacts};
+const {syncContacts, addContact, editContact, starContact, clearContacts, deleteContact} = contactsSlice.actions;
+export {contactsSlice, syncContacts, addContact, starContact, editContact, deleteContact, clearContacts};
 
 export default contactsSlice.reducer;

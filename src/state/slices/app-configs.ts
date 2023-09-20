@@ -14,7 +14,7 @@ const initialValue: AppConfigs = {
 /* const setStorage = (value: ContactItem[]) => setItem('contacts', JSON.stringify(value)); */
 
 const contactsSlice = createSlice({
-  name: 'contacts',
+  name: 'AppConfigs',
   initialState: {
     value: initialValue,
   },
