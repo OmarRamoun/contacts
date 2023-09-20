@@ -22,13 +22,16 @@ import {
   TableHeader,
   TransitionContainer,
   Typography,
+  SPRING_CONFIGURATION_FAST_BOUNCE,
   useToastContext,
 } from '@components';
+import {ANDROID, CONTACTS_WRITE_PERM_DETAILS} from '@constants/permissions';
 import {useKeyboard} from '@hooks';
 import {useFormik} from '@lib';
 import {addContact, editContact} from '@state/slices';
 import type {RootState} from '@state/store';
 import type {ContactItem, RouteNavigationProps, ViewNavigationProps} from '@types';
+import {getPermissions} from '@utils/permissions';
 
 interface FormViewProps {
   navigation?: ViewNavigationProps<'Form'>;
@@ -58,36 +61,47 @@ const FormView = ({navigation, route}: FormViewProps) => {
     lastName: '',
     phone: '',
     email: '',
-    organization: '',
   };
 
   const formik = useFormik({
     initialValues: contact || initialValue,
     onSubmit: async () => {
-      if (
-        !formik.values.firstName ||
-        !formik.values.lastName ||
-        !formik.values.phone ||
-        !formik.values.email ||
-        !formik.values.organization
-      ) {
+      if (!formik.values.firstName || !formik.values.lastName || !formik.values.phone || !formik.values.email) {
         showErrorToast({message: 'Please fill in all fields'});
         return;
       }
 
       if (type === 'add' && formik.values?.id) {
-        dispatch(addContact(formik.values));
-        showOneToast({message: 'Contact Was Successfully Added', backgroundColor: 'green'});
+        try {
+          await getPermissions(
+            ANDROID.contactsWrite,
+            () => dispatch(addContact(formik.values)),
+            CONTACTS_WRITE_PERM_DETAILS,
+          );
+
+          showOneToast({message: 'Contact Was Successfully Added', backgroundColor: 'green'});
+        } catch (error) {
+          showErrorToast({message: 'Failed To Add Contact. Check App Permissions'});
+        }
       } else {
-        dispatch(editContact(formik.values));
-        showOneToast({message: 'Contact Was Successfully Updated', backgroundColor: 'green'});
+        try {
+          await getPermissions(
+            ANDROID.contactsWrite,
+            () => dispatch(editContact(formik.values)),
+            CONTACTS_WRITE_PERM_DETAILS,
+          );
+
+          showOneToast({message: 'Contact Was Successfully Updated', backgroundColor: 'green'});
+        } catch (error) {
+          showErrorToast({message: 'Failed To Update Contact. Check App Permissions'});
+        }
       }
 
       navigation?.goBack();
     },
   });
 
-  const handleCancel = () => setConfirmCancel(true);
+  const handleCancel = () => (formik.dirty ? setConfirmCancel(true) : navigation?.goBack());
 
   return (
     <>
@@ -103,18 +117,18 @@ const FormView = ({navigation, route}: FormViewProps) => {
             }
           />
 
-          <Flex alignItems="center" justifyContent="center" p={5} bg="darkBlueOpacity">
-            <Avatar
-              editable
-              size="lg"
-              borderColor="black"
-              borderWidth={4}
-              image={type === 'add' ? undefined : formik.values.avatar}
-            />
-          </Flex>
-
           <TableBody shouldScroll>
             <ScrollView>
+              <Flex alignItems="center" justifyContent="center" p={5} bg="darkBlueOpacity">
+                <Avatar
+                  editable
+                  size="lg"
+                  borderColor="black"
+                  borderWidth={4}
+                  image={type === 'add' ? undefined : formik.values.avatar}
+                />
+              </Flex>
+
               <Form ctx={formik} verticalSpacing={0}>
                 <Flex p={3}>
                   <InputFormik name="firstName">
@@ -180,21 +194,6 @@ const FormView = ({navigation, route}: FormViewProps) => {
                     />
                   </InputFormik>
                 </Flex>
-
-                <Flex p={3}>
-                  <InputFormik name="organization">
-                    <InputField
-                      numberOfLines={1}
-                      title="Orgnaization"
-                      inputTextProps={{placeholder: 'e.g: Acme'}}
-                      leftSlot={() => (
-                        <Flex p={2} pr={0}>
-                          <Icon name="staff" />
-                        </Flex>
-                      )}
-                    />
-                  </InputFormik>
-                </Flex>
               </Form>
             </ScrollView>
           </TableBody>
@@ -203,10 +202,7 @@ const FormView = ({navigation, route}: FormViewProps) => {
             <TransitionContainer
               transitionStyle={FadeTransitionStyle}
               isVisible={!keyboardShown}
-              springConfig={{
-                tension: 300,
-                friction: 5,
-              }}>
+              springConfig={SPRING_CONFIGURATION_FAST_BOUNCE}>
               <TableFooter padding={1}>
                 <Button depth={4} onPress={() => formik.submitForm()}>
                   Save
