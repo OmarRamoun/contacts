@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {Flex, SectionList, Line, Typography} from '@components';
 import type {GroupedContacts} from '@types';
@@ -8,16 +8,25 @@ import {useHomeContext} from '../home-context';
 import {Contact} from './contact';
 
 const ContactsList = ({contacts}: {contacts: GroupedContacts[]}) => {
-  const {currentExpanded, setCurrentExpanded, canPaginate, setCanPaginate} = useHomeContext();
+  const {currentExpanded, setCurrentExpanded} = useHomeContext();
+
+  const MemoizedContact = useMemo(() => React.memo(Contact), [contacts]);
+
+  const [loader, setLoader] = useState<boolean>(false);
+
+  const onEndReached = () => {
+    setLoader(true);
+  };
 
   return (
     <SectionList
+      removeClippedSubviews
       keyExtractor={(contact, index) => `contact-${contact.id}-${index}`}
-      renderSectionHeader={({section: {title}}) => (
+      renderSectionHeader={(item) => (
         <Flex flexDirection="row" alignItems="center" px={2} py={1} my={2} bg="bgGrey" style={{elevation: 1}}>
           <Flex>
             <Typography textStyle="sectionHeaderBold" color="darkGrey">
-              {title.toUpperCase()}
+              {item.toUpperCase()}
             </Typography>
           </Flex>
 
@@ -26,14 +35,14 @@ const ContactsList = ({contacts}: {contacts: GroupedContacts[]}) => {
           </Flex>
         </Flex>
       )}
-      stickySectionHeadersEnabled
-      onEndReached={() => setCanPaginate(false)}
-      canPaginate={canPaginate}
+      /* stickySectionHeadersEnabled */
+      onEndReached={onEndReached}
+      canPaginate={loader}
       sections={contacts}
-      renderItem={({item: contact, index}) => (
-        <Contact
+      renderElement={(contact, index) => (
+        <MemoizedContact
           expanded={currentExpanded === contact.id}
-          showTopBorder={index !== 0}
+          showTopBorder={index !== 1}
           onPress={() => {
             setCurrentExpanded((prevContactId) => (prevContactId === contact.id ? 0 : contact.id));
           }}

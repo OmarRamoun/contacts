@@ -1,10 +1,14 @@
-import React, {createContext, useContext, useState, useMemo} from 'react';
+import React, {createContext, useContext, useState, useMemo, useEffect} from 'react';
 
-import {useSelector} from 'react-redux';
+import PhoneContacts from 'react-native-contacts';
+import {useSelector, useDispatch} from 'react-redux';
 
+import {ANDROID, CONTACTS_READ_PERM_DETAILS} from '@constants/permissions';
+import {syncContacts} from '@state/slices';
 import type {RootState} from '@state/store';
-import type {ContactItem, GroupedContacts} from '@types';
+import type {ContactItem, GroupedContacts, Contacts} from '@types';
 import {utils} from '@utils/general';
+import {getPermissions} from '@utils/permissions';
 
 interface HomeContextProps {
   contactsSortedArray: GroupedContacts[];
@@ -12,6 +16,7 @@ interface HomeContextProps {
   setCurrentExpanded: React.Dispatch<React.SetStateAction<ContactItem['id'] | null>>;
   canPaginate: boolean;
   setCanPaginate: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean;
 }
 
 interface HomeContextProviderProps {
@@ -24,13 +29,17 @@ const HomeContext = createContext<HomeContextProps>({
   setCurrentExpanded: utils.noop,
   canPaginate: false,
   setCanPaginate: utils.noop,
+  loading: false,
 });
 
 const HomeContextProvider = ({children}: HomeContextProviderProps) => {
   const [currentExpanded, setCurrentExpanded] = useState<ContactItem['id'] | null>(null);
   const [canPaginate, setCanPaginate] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const contacts = useSelector((state: RootState) => state.contacts.value);
+  const dispatch = useDispatch();
+
+  const contacts = useSelector((state: RootState) => state.contacts.value) || {};
 
   const contactsSortedArray: GroupedContacts[] = useMemo(
     () =>
@@ -55,12 +64,44 @@ const HomeContextProvider = ({children}: HomeContextProviderProps) => {
     [contacts],
   );
 
+  const loadContacts = async () => {
+    const allContacts = await PhoneContacts.getAll();
+
+    const trimmedContacts = allContacts.reduce((acc: Contacts, c) => {
+      if (c.phoneNumbers.length > 0) {
+        acc[c.recordID] = {
+          id: c.recordID,
+          hasAvatar: c.hasThumbnail,
+          avatar: c.thumbnailPath,
+          firstName: c.givenName,
+          lastName: c.familyName,
+          phone: c.phoneNumbers[0]?.number,
+          email: c.emailAddresses[0]?.email,
+          isStarred: c.isStarred,
+        };
+      }
+
+      return acc;
+    }, {});
+
+    dispatch(syncContacts(trimmedContacts));
+    setLoading(false);
+
+    await PhoneContacts.checkPermission();
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    getPermissions(ANDROID.contactsRead, loadContacts, CONTACTS_READ_PERM_DETAILS);
+  }, [contacts]);
+
   const values: HomeContextProps = {
     contactsSortedArray,
     currentExpanded,
     setCurrentExpanded,
     canPaginate,
     setCanPaginate,
+    loading,
   };
 
   return <HomeContext.Provider value={values}>{children}</HomeContext.Provider>;

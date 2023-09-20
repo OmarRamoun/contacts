@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Avatar, ExpandableItem, Flex, Icon, Pressable, Typography, useToastContext} from '@components';
 import {theme} from '@styles';
 import type {ContactItem, ViewNavigationProps} from '@types';
+import {getInitialsString} from '@utils/strings';
 
 interface ContactProps {
   expanded?: boolean;
@@ -24,7 +25,10 @@ const Contact = ({expanded = false, showTopBorder, onPress, contact}: ContactPro
       leftSlot={
         <Flex flexDirection="row" alignItems="center" p={2}>
           <Flex mr={2}>
-            <Avatar image={contact.avatar} />
+            <Avatar
+              image={contact?.avatar}
+              initials={!contact.hasAvatar ? getInitialsString(contact.firstName, contact.lastName) : undefined}
+            />
           </Flex>
 
           <Flex>
@@ -36,7 +40,7 @@ const Contact = ({expanded = false, showTopBorder, onPress, contact}: ContactPro
         <Pressable
           p={4}
           borderRadius={8}
-          onPress={() => showOneToast({message: 'This Feature is comming soon...', backgroundColor: 'grey'})}
+          onPress={() => showOneToast({message: 'This Feature is comming soon...', backgroundColor: 'blue'})}
           onPressStyles={{backgroundColor: theme.colors.grey}}>
           <Icon name="phone" />
         </Pressable>
@@ -44,7 +48,7 @@ const Contact = ({expanded = false, showTopBorder, onPress, contact}: ContactPro
         <Pressable
           p={4}
           borderRadius={8}
-          onPress={() => showOneToast({message: 'This Feature is comming soon...', backgroundColor: 'grey'})}
+          onPress={() => showOneToast({message: 'This Feature is comming soon...', backgroundColor: 'blue'})}
           onPressStyles={{backgroundColor: theme.colors.grey}}>
           <Icon name="envelope" />
         </Pressable>

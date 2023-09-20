@@ -13,6 +13,7 @@ import {
   InputText,
   Line,
   MenuCollapse,
+  Spinner,
   TouchableOpacity,
 } from '@components';
 import {clearContacts} from '@state/slices';
@@ -22,6 +23,7 @@ import type {ViewNavigationProps} from '@types';
 import {ContactsList} from './components/contacts-list';
 import {RoundButton} from './components/round-button';
 import {useHomeContext} from './home-context';
+import {contactsBinarySearch} from './utils';
 
 interface HomeViewProps {
   navigation?: ViewNavigationProps<'Home'>;
@@ -30,7 +32,7 @@ interface HomeViewProps {
 const HomeView = ({navigation}: HomeViewProps) => {
   const [search, setSearch] = useState<string>('');
 
-  const {contactsSortedArray} = useHomeContext();
+  const {contactsSortedArray, loading} = useHomeContext();
 
   const dispatch = useDispatch();
 
@@ -41,7 +43,7 @@ const HomeView = ({navigation}: HomeViewProps) => {
 
     const filteredContacts = contactsSortedArray.map((group) => ({
       ...group,
-      data: group.data.filter((contact) => contact.firstName.toLowerCase().includes(searchTerm.toLowerCase())),
+      data: contactsBinarySearch(group.data, searchTerm),
     }));
 
     return filteredContacts.filter((group) => group.data.length > 0);
@@ -49,8 +51,16 @@ const HomeView = ({navigation}: HomeViewProps) => {
 
   const filteredContacts = useMemo(() => filterContacts(search), [search, contactsSortedArray]);
 
+  if (loading) {
+    return (
+      <Flex alignItems="center" justifyContent="center" flex={1}>
+        <Spinner />
+      </Flex>
+    );
+  }
+
   return (
-    <Flex flex={1} m={2}>
+    <Flex flex={1} m={2} mb={0}>
       <InputContainer
         style={{
           borderWidth: 0,
@@ -137,8 +147,8 @@ const HomeView = ({navigation}: HomeViewProps) => {
 
       <RoundButton
         position="absolute"
-        bottom={0}
-        right={0}
+        bottom={3}
+        right={1}
         onPress={() =>
           navigation?.navigate('Form', {
             type: 'add',
