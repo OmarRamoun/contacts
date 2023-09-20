@@ -4,7 +4,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 
-import {ActionSheetContainer, Button, Flex, ModalContainer, SafeArea, StatusBar, ToastContainer} from '@components';
+import {ActionSheetContainer, ModalContainer, SafeArea, StatusBar, ToastContainer} from '@components';
 import {persistor, store} from '@state/store';
 import {ThemeProvider} from '@styles';
 
