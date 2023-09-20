@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
 
 import {Flex, SectionList, Line, Typography} from '@components';
 import type {GroupedContacts} from '@types';
@@ -9,14 +9,6 @@ import {Contact} from './contact';
 
 const ContactsList = ({contacts}: {contacts: GroupedContacts[]}) => {
   const {currentExpanded, setCurrentExpanded} = useHomeContext();
-
-  const MemoizedContact = useMemo(() => React.memo(Contact), [contacts]);
-
-  const [loader, setLoader] = useState<boolean>(false);
-
-  const onEndReached = () => {
-    setLoader(true);
-  };
 
   return (
     <SectionList
@@ -36,11 +28,9 @@ const ContactsList = ({contacts}: {contacts: GroupedContacts[]}) => {
         </Flex>
       )}
       /* stickySectionHeadersEnabled */
-      onEndReached={onEndReached}
-      canPaginate={loader}
       sections={contacts}
       renderElement={(contact, index) => (
-        <MemoizedContact
+        <Contact
           expanded={currentExpanded === contact.id}
           showTopBorder={index !== 1}
           onPress={() => {
