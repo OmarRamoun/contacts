@@ -130,6 +130,7 @@ const colors = {
   redLightened: '#ED757C',
   darkGrey: '#737B86',
   grey: '#D9DDE4',
+  bgGrey: '#F2F2F2',
   white: '#FFFFFF',
   black: '#000000',
   transBlack: '#00000020',
