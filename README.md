@@ -30,7 +30,7 @@
 7. Build stacks of the app (under `src/stacks`)
 8. Build hooks and utility functions (under `src/hooks` and `src/utils`)
 9. Add global state (using `Redux Toolkit` - under `src/state`)
-10. Add animations (using `Framer Motion`)
+10. Add animations (using `RN Animated`)
 11. [Coming Soon] Unit Tests and Mocks.
 12. [Coming Soon] Performance Optimization
 13. [Coming Soon] Add Security Layers
