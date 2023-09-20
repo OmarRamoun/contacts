@@ -7,9 +7,40 @@
 
 # Contacts
 
-## 🚀 Check Web Version
+> A sample app for a contacts managment system. react native application that allows the user to add, delete, update the contact they want.
 
-- []()
+## Collective Screenshots of the APP [android]
+
+<p align="center" justify="center">
+  <img width="180px" height="320px" src="screenshots/screenshot1.png" />
+  <img width="180px" height="320px" src="screenshots/screenshot2.png" />
+  <img width="180px" height="320px" src="screenshots/screenshot3.png" />
+  <img width="180px" height="320px" src="screenshots/screenshot4.png" />
+</p>
+
+## Outline of Building Process
+
+0. Prepare Project Structuree, Dependecy Management, Build System, Linting System, and Application Configs.
+1. Build a navgiation stack map
+2. UI Breakdown to components (core components, navigation, layouts, pages)
+3. Build components library (core building blocks of the app - under `src/components`)
+4. Build a styling system using `styled-system` (including theme and global styles - under `src/styles`)
+5. Add styling to core components
+6. Build screens components (responsible for common layouts between pages - under `src/screens`)
+7. Build stacks of the app (under `src/stacks`)
+8. Build hooks and utility functions (under `src/hooks` and `src/utils`)
+9. Add global state (using `Redux Toolkit` - under `src/state`)
+10. Add animations (using `Framer Motion`)
+11. [Coming Soon] Unit Tests and Mocks.
+12. [Coming Soon] Performance Optimization
+13. [Coming Soon] Add Security Layers
+
+## Built With
+
+1. **Typescript**
+2. **React Native**
+3. **Styled System**
+4. **Redux Toolkit**
 
 ## How To Run Locally
 
@@ -59,3 +90,21 @@ yarn ios
 ```
 
 If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+
+## Author
+
+👤 **Omar Ramoun**
+
+- **GitHub**: [![@omarramoun](https://img.shields.io/github/followers/omarramoun?label=OmarRamoun&style=social)](https://github.com/omarramoun)
+- **Twitter**: [![@omarramoun](https://img.shields.io/twitter/follow/omarramoun?label=OmarRamoun&style=social)](https://twitter.com/omarramoun)
+- **LinkdIn**: [![@omarramoun](https://img.shields.io/github/followers/omarramoun?label=OmarRamoun&logo=linkedin&style=social)](https://www.linkedin.com/in/omarramoun/)
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](../../issues).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
