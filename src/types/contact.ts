@@ -1,11 +1,12 @@
 interface ContactItem {
   id: string;
-  avatar: string;
+  hasAvatar?: boolean;
+  avatar?: string;
   firstName: string;
   lastName: string;
   phone: string;
   email: string;
-  organization: string;
+  isStarred?: boolean;
 }
 
 interface Contacts {
