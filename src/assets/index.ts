@@ -74,7 +74,7 @@ import questionMark from './svg/question-mark.svg';
 import pause from './svg/pause.svg';
 import fullscreen from './svg/fullscreen.svg';
 import YellowStar from './svg/yellow-star.svg';
-import BlueStar from './svg/blue-star.svg';
+import Star from './svg/star.svg';
 import info from './svg/info.svg';
 import alertTriangle from './svg/alert-triangle.svg';
 import filterEssentials from './svg/filter-essentials.svg';
@@ -183,7 +183,7 @@ export const iconMap = {
   'closed-eye': closedEye,
   'open-eye': openEye,
   'yellow-star': YellowStar,
-  'blue-star': BlueStar,
+  star: Star,
   report,
   inbox,
   'unread-message': unreadMessage,
