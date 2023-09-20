@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Button, Flex} from '@components';
+import {Typography, Button, Flex, InputToggle, TableItem} from '@components';
 import type {ViewNavigationProps} from '@types';
 
 interface SettingsViewProps {
@@ -9,7 +9,11 @@ interface SettingsViewProps {
 
 const SettingsView = ({navigation}: SettingsViewProps) => (
   <Flex m={4}>
-    <Button onPress={() => navigation?.goBack()}>go back</Button>
+    <Flex mb={4}>
+      <TableItem left={<Typography>Safe Mode</Typography>} right={<InputToggle />} />
+    </Flex>
+
+    <Button onPress={() => navigation?.goBack()}>Go Back</Button>
   </Flex>
 );
 
