@@ -44,13 +44,41 @@
 
 ## Showcase Videos
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/924c275f602142ea8c7ae24348bacf51?sid=6f4b8e6f-905f-4efe-bc3d-2aeb78f0b754" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<div>
+    <a href="https://www.loom.com/share/924c275f602142ea8c7ae24348bacf51">
+      <p>Contacts App Showcase Part.1 - Watch Video</p>
+    </a>
+    <a href="https://www.loom.com/share/924c275f602142ea8c7ae24348bacf51">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/924c275f602142ea8c7ae24348bacf51-with-play.gif">
+    </a>
+</div>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/8269364a72c44c2ebeeb4dbcaae153a7?sid=6ad9566a-b9c8-4291-8839-47ff8c9bf26a" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<div>
+    <a href="https://www.loom.com/share/8269364a72c44c2ebeeb4dbcaae153a7">
+      <p>Contacts App Showcase pt.2 - Watch Video</p>
+    </a>
+    <a href="https://www.loom.com/share/8269364a72c44c2ebeeb4dbcaae153a7">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/8269364a72c44c2ebeeb4dbcaae153a7-with-play.gif">
+    </a>
+</div>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/65e39714ecd44d6597556b225c10bf66?sid=c4ab215e-9d77-41c9-96c7-5e6e563a461f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<div>
+    <a href="https://www.loom.com/share/65e39714ecd44d6597556b225c10bf66">
+      <p>Contacts App Showcase pt.3 - Watch Video</p>
+    </a>
+    <a href="https://www.loom.com/share/65e39714ecd44d6597556b225c10bf66">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/65e39714ecd44d6597556b225c10bf66-with-play.gif">
+    </a>
+</div>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/23b2dae1b6514182b69ef4da076f79be?sid=08f9e19a-9b32-4dd9-acff-278ac1603719" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<div>
+    <a href="https://www.loom.com/share/23b2dae1b6514182b69ef4da076f79be">
+      <p>Contacts App Showcase Pt.4</p>
+    </a>
+    <a href="https://www.loom.com/share/23b2dae1b6514182b69ef4da076f79be">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/23b2dae1b6514182b69ef4da076f79be-with-play.gif">
+    </a>
+</div>
 
 
 ## How To Run Locally
