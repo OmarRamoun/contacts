@@ -42,6 +42,17 @@
 3. **Styled System**
 4. **Redux Toolkit**
 
+## Showcase Videos
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/924c275f602142ea8c7ae24348bacf51?sid=6f4b8e6f-905f-4efe-bc3d-2aeb78f0b754" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/8269364a72c44c2ebeeb4dbcaae153a7?sid=6ad9566a-b9c8-4291-8839-47ff8c9bf26a" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/65e39714ecd44d6597556b225c10bf66?sid=c4ab215e-9d77-41c9-96c7-5e6e563a461f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/23b2dae1b6514182b69ef4da076f79be?sid=08f9e19a-9b32-4dd9-acff-278ac1603719" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+
 ## How To Run Locally
 
 > **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
