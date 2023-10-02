@@ -147,7 +147,7 @@ const Avatar = ({
         <Box
           backgroundColor={hovered ? 'highlightedActive' : 'highlighted'}
           width="100%"
-          py={size === 'sm' || size < 30 ? 1 : 2}
+          py={size === 'sm' || (typeof size === 'number' && size < 30) ? 1 : 2}
           style={{position: 'absolute', bottom: 0, left: 0}}>
           <Typography textStyle="small" textAlign="center">
             Edit

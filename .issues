@@ -1,0 +1,16 @@
+# [CNT-001] End Of List Flickering issue
+
+at the end of list when i click at any of the elements. "end of list" text hides and shows
+
+# [CNT-002] Fix Updating an Existing Contact
+
+on upating, original data is ruined
+
+- [check Update Contact Section](https://www.npmjs.com/package/react-native-contacts)
+- [suspected code](https://github.com/OmarRamoun/contacts/blob/staging/src/state/helpers/index.ts)
+
+# [CNT-003] Add loading animations to flash list
+
+# [CNT-004] Fix delayed contact list section headers updates
+
+on scroll and on search
