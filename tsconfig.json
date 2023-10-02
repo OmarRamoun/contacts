@@ -58,7 +58,7 @@
     "useDefineForClassFields": true,
     "noImplicitAny": true,
     "typeRoots": ["node_modules/@types", "tsconfig.json"],
-    "types": ["node", "styled-components-react-native", "./src/types/definations/styled-components.d.ts"]
+    "types": ["node", "styled-components-react-native"]
   },
   "include": ["src", "./src/types/definations/styled-components.d.ts"],
   "exclude": ["node_modules", "test/*", "babel.config.js", "metro.config.js"]
